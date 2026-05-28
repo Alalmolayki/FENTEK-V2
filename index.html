@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FenTECH 2026 - Uluslararası Bilim, Teknoloji ve İnovasyon Festivali. Gelenekten Geleceğe: Erdemli Teknoloji, İnsan Odaklı İnovasyon.">
+    <title>FenTECH 2026 | Uluslararası Bilim, Teknoloji ve İnovasyon Festivali</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin/admin.css">
+</head>
+<body>
+
+<!-- ═══ CUSTOM CURSOR ═══ -->
+<div class="cursor-outer" id="cursorOuter"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- ═══ INTRO SCREEN ═══ -->
+<div id="introScreen">
+    <canvas id="introCanvas"></canvas>
+    <!-- Istanbul Silhouette -->
+    <div class="istanbul-wrap intro-istanbul">
+      <svg class="istanbul-svg" viewBox="0 0 1440 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
+        <defs>
+          <radialGradient id="igCityGlow" cx="50%" cy="100%" r="65%">
+            <stop offset="0%" stop-color="#ff7300" stop-opacity="0.2"/>
+            <stop offset="55%" stop-color="#ff9500" stop-opacity="0.07"/>
+            <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect x="0" y="0" width="1440" height="220" fill="url(#igCityGlow)"/>
+        <g class="ist-fill">
+          <!-- Far left — Karaköy/Tophane modern buildings -->
+          <rect x="0" y="176" width="32" height="44"/><rect x="34" y="168" width="22" height="52"/>
+          <rect x="58" y="179" width="16" height="41"/><rect x="76" y="163" width="26" height="57"/>
+          <rect x="104" y="171" width="18" height="49"/><rect x="124" y="157" width="30" height="63"/>
+          <rect x="156" y="165" width="14" height="55"/><rect x="172" y="173" width="10" height="47"/>
+          <!-- GALATA TOWER (Galata Kulesi) — cylindrical stone tower, 14th century Genoese -->
+          <rect x="182" y="158" width="10" height="62"/>
+          <rect x="194" y="132" width="28" height="88"/>
+          <rect x="197" y="108" width="22" height="28"/>
+          <rect x="199" y="92" width="18" height="18"/>
+          <ellipse cx="208" cy="92" rx="17" ry="5"/>
+          <rect x="202" y="79" width="12" height="15"/>
+          <polygon points="202,79 214,79 208,54"/>
+          <rect x="224" y="150" width="14" height="70"/>
+          <!-- Buildings — Karaköy to Eminönü -->
+          <rect x="240" y="156" width="24" height="64"/><rect x="266" y="148" width="26" height="72"/>
+          <rect x="294" y="162" width="20" height="58"/><rect x="316" y="153" width="24" height="67"/>
+          <rect x="342" y="147" width="18" height="73"/><rect x="362" y="159" width="22" height="61"/>
+          <rect x="386" y="163" width="14" height="57"/>
+          <!-- SÜLEYMANIYE MOSQUE — on Third Hill, 4 minarets, Sinan masterpiece -->
+          <!-- Hill mass -->
+          <polygon points="396,220 504,220 500,150 472,138 450,133 428,138 400,150"/>
+          <!-- Mosque body -->
+          <rect x="406" y="150" width="90" height="70"/>
+          <!-- East + West exedrae (semi-domes) -->
+          <ellipse cx="419" cy="150" rx="18" ry="14"/>
+          <ellipse cx="483" cy="150" rx="18" ry="14"/>
+          <!-- Main dome -->
+          <ellipse cx="451" cy="133" rx="40" ry="34"/>
+          <!-- Outer tall minarets (2, at far corners) -->
+          <rect x="400" y="68" width="6" height="152"/><polygon points="397,68 406,68 401,46"/>
+          <rect x="496" y="68" width="6" height="152"/><polygon points="493,68 502,68 497,46"/>
+          <!-- Inner shorter minarets (2, at courtyard corners) -->
+          <rect x="412" y="88" width="5" height="132"/><polygon points="409,88 417,88 413,70"/>
+          <rect x="485" y="88" width="5" height="132"/><polygon points="482,88 490,88 486,70"/>
+          <!-- YENI CAMI (New Mosque / Eminönü) — 2 minarets, waterfront -->
+          <rect x="516" y="118" width="5" height="102"/><polygon points="513,118 521,118 517,100"/>
+          <rect x="548" y="118" width="5" height="102"/><polygon points="545,118 553,118 549,100"/>
+          <rect x="512" y="152" width="44" height="68"/>
+          <ellipse cx="522" cy="152" rx="14" ry="11"/>
+          <ellipse cx="546" cy="152" rx="14" ry="11"/>
+          <ellipse cx="534" cy="143" rx="25" ry="21"/>
+          <!-- HAGIA SOPHIA (Ayasofya) — 4 tall Ottoman minarets + Byzantine dome -->
+          <!-- Outer minarets (tallest) -->
+          <rect x="558" y="40" width="7" height="180"/><polygon points="555,40 565,40 560,18"/>
+          <rect x="701" y="40" width="7" height="180"/><polygon points="698,40 708,40 703,18"/>
+          <!-- Inner minarets -->
+          <rect x="572" y="66" width="6" height="154"/><polygon points="569,66 578,66 573,46"/>
+          <rect x="688" y="66" width="6" height="154"/><polygon points="685,66 694,66 689,46"/>
+          <!-- Mosque body + exedrae -->
+          <rect x="560" y="126" width="146" height="94"/>
+          <ellipse cx="588" cy="126" rx="31" ry="26"/>
+          <ellipse cx="678" cy="126" rx="31" ry="26"/>
+          <!-- Main dome (large, flattish Byzantine) -->
+          <ellipse cx="633" cy="92" rx="66" ry="57"/>
+          <!-- Gap buildings -->
+          <rect x="714" y="160" width="20" height="60"/><rect x="736" y="154" width="16" height="66"/>
+          <rect x="754" y="167" width="14" height="53"/>
+          <!-- BLUE MOSQUE (Sultan Ahmed Camii) — 6 minarets, most recognisable Istanbul skyline -->
+          <!-- Outermost minarets (tallest, at far courtyard corners) -->
+          <rect x="773" y="26" width="6" height="194"/><polygon points="770,26 779,26 774,4"/>
+          <rect x="899" y="26" width="6" height="194"/><polygon points="896,26 905,26 900,4"/>
+          <!-- Middle minarets -->
+          <rect x="789" y="50" width="5" height="170"/><polygon points="786,50 794,50 790,30"/>
+          <rect x="884" y="50" width="5" height="170"/><polygon points="881,50 889,50 885,30"/>
+          <!-- Inner corner minarets (shorter) -->
+          <rect x="805" y="66" width="4" height="154"/><polygon points="803,66 809,66 806,50"/>
+          <rect x="869" y="66" width="4" height="154"/><polygon points="867,66 873,66 870,50"/>
+          <!-- Main body + semi-domes -->
+          <rect x="771" y="126" width="136" height="94"/>
+          <ellipse cx="795" cy="126" rx="25" ry="21"/>
+          <ellipse cx="883" cy="126" rx="25" ry="21"/>
+          <!-- Central dome -->
+          <ellipse cx="839" cy="96" rx="58" ry="52"/>
+          <!-- Buildings — Bosphorus approach -->
+          <rect x="912" y="159" width="26" height="61"/><rect x="940" y="150" width="20" height="70"/>
+          <rect x="962" y="163" width="22" height="57"/><rect x="986" y="153" width="18" height="67"/>
+          <rect x="1006" y="166" width="24" height="54"/><rect x="1032" y="156" width="16" height="64"/>
+          <rect x="1050" y="163" width="18" height="57"/>
+          <!-- KIZ KULESI (Maiden's Tower / Leander's Tower) — tiny island in Bosphorus -->
+          <rect x="1070" y="207" width="18" height="6"/>
+          <rect x="1073" y="194" width="12" height="15"/>
+          <rect x="1071" y="190" width="16" height="6"/>
+          <polygon points="1072,190 1087,190 1079,175"/>
+          <rect x="1054" y="212" width="18" height="3"/>
+          <!-- BOSPHORUS BRIDGE (Boğaziçi Köprüsü, 1973) -->
+          <!-- Left H-tower (European side) -->
+          <rect x="1094" y="58" width="16" height="162"/><rect x="1092" y="52" width="20" height="10"/>
+          <!-- Right H-tower (Asian side) -->
+          <rect x="1318" y="58" width="16" height="162"/><rect x="1316" y="52" width="20" height="10"/>
+          <!-- Deck -->
+          <rect x="1094" y="161" width="240" height="9"/>
+          <!-- Main catenary cables -->
+          <path d="M1102,64 C1148,64 1164,163 1228,163" class="ist-stroke"/>
+          <path d="M1102,64 C1062,76 1042,170 994,171" class="ist-stroke"/>
+          <path d="M1326,64 C1280,64 1264,163 1200,163" class="ist-stroke"/>
+          <path d="M1326,64 C1366,76 1386,168 1440,163" class="ist-stroke"/>
+          <!-- Asian side buildings -->
+          <rect x="1348" y="153" width="22" height="67"/><rect x="1372" y="163" width="28" height="57"/>
+          <rect x="1402" y="146" width="38" height="74"/>
+        </g>
+        <!-- Sea / water with gentle wave -->
+        <path d="M0,198 Q360,188 720,198 Q1080,208 1440,198 L1440,220 L0,220 Z" class="ist-sea"/>
+      </svg>
+    </div>
+    <div class="intro-content">
+        <div class="intro-logo-wrap">
+            <div class="intro-logo">
+                <span class="i-fen" id="iFen">Fen</span><span class="i-tech" id="iTech">TECH</span>
+            </div>
+            <div class="intro-festival-name" id="iFestName">Uluslararası Bilim, Teknoloji ve İnovasyon Festivali</div>
+            <div class="intro-year" id="iYear">2026</div>
+        </div>
+        <div class="intro-tagline" id="iTagline">Erdemli Teknoloji · İnsan Odaklı İnovasyon</div>
+        <div class="intro-bar-wrap" id="iBar">
+            <div class="intro-bar-fill"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav id="navbar">
+    <div class="nav-inner">
+        <a href="#hero" class="nav-brand-wrap">
+            <span class="nav-logo">Fen<span>TECH</span><sub>2026</sub></span>
+            <span class="nav-subtitle">Uluslararası Bilim, Teknoloji &amp; İnovasyon Festivali</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about" class="nav-lnk">Hakkında</a></li>
+            <li><a href="#competitions" class="nav-lnk">Yarışmalar</a></li>
+            <li><a href="#schedule" class="nav-lnk">Program</a></li>
+            <li><a href="#faq" class="nav-lnk">SSS</a></li>
+            <li><a href="#register" class="nav-lnk nav-cta">Kayıt Ol</a></li>
+        </ul>
+        <button class="theme-toggle" id="themeToggle" aria-label="Tema Değiştir" title="Aydınlık / Karanlık Mod">
+            <span class="tt-icon" id="ttIcon">☀️</span>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Menü">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+    <canvas id="heroCanvas"></canvas>
+    <div class="hero-grid-bg"></div>
+    <div class="hero-overlay"></div>
+    <!-- Istanbul Silhouette (same SVG reused) -->
+    <div class="istanbul-wrap hero-istanbul">
+      <svg class="istanbul-svg" viewBox="0 0 1440 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
+        <defs>
+          <radialGradient id="hCityGlow" cx="50%" cy="100%" r="65%">
+            <stop offset="0%" stop-color="#ff7300" stop-opacity="0.18"/>
+            <stop offset="55%" stop-color="#ff9500" stop-opacity="0.06"/>
+            <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect x="0" y="0" width="1440" height="220" fill="url(#hCityGlow)"/>
+        <g class="ist-fill">
+          <!-- Far left — Karaköy/Tophane modern buildings -->
+          <rect x="0" y="176" width="32" height="44"/><rect x="34" y="168" width="22" height="52"/>
+          <rect x="58" y="179" width="16" height="41"/><rect x="76" y="163" width="26" height="57"/>
+          <rect x="104" y="171" width="18" height="49"/><rect x="124" y="157" width="30" height="63"/>
+          <rect x="156" y="165" width="14" height="55"/><rect x="172" y="173" width="10" height="47"/>
+          <!-- GALATA TOWER -->
+          <rect x="182" y="158" width="10" height="62"/>
+          <rect x="194" y="132" width="28" height="88"/>
+          <rect x="197" y="108" width="22" height="28"/>
+          <rect x="199" y="92" width="18" height="18"/>
+          <ellipse cx="208" cy="92" rx="17" ry="5"/>
+          <rect x="202" y="79" width="12" height="15"/>
+          <polygon points="202,79 214,79 208,54"/>
+          <rect x="224" y="150" width="14" height="70"/>
+          <!-- Buildings — Karaköy to Eminönü -->
+          <rect x="240" y="156" width="24" height="64"/><rect x="266" y="148" width="26" height="72"/>
+          <rect x="294" y="162" width="20" height="58"/><rect x="316" y="153" width="24" height="67"/>
+          <rect x="342" y="147" width="18" height="73"/><rect x="362" y="159" width="22" height="61"/>
+          <rect x="386" y="163" width="14" height="57"/>
+          <!-- SÜLEYMANIYE MOSQUE — on Third Hill, 4 minarets, Sinan masterpiece -->
+          <polygon points="396,220 504,220 500,150 472,138 450,133 428,138 400,150"/>
+          <rect x="406" y="150" width="90" height="70"/>
+          <ellipse cx="419" cy="150" rx="18" ry="14"/>
+          <ellipse cx="483" cy="150" rx="18" ry="14"/>
+          <ellipse cx="451" cy="133" rx="40" ry="34"/>
+          <rect x="400" y="68" width="6" height="152"/><polygon points="397,68 406,68 401,46"/>
+          <rect x="496" y="68" width="6" height="152"/><polygon points="493,68 502,68 497,46"/>
+          <rect x="412" y="88" width="5" height="132"/><polygon points="409,88 417,88 413,70"/>
+          <rect x="485" y="88" width="5" height="132"/><polygon points="482,88 490,88 486,70"/>
+          <!-- YENI CAMI (New Mosque / Eminönü) — 2 minarets, waterfront -->
+          <rect x="516" y="118" width="5" height="102"/><polygon points="513,118 521,118 517,100"/>
+          <rect x="548" y="118" width="5" height="102"/><polygon points="545,118 553,118 549,100"/>
+          <rect x="512" y="152" width="44" height="68"/>
+          <ellipse cx="522" cy="152" rx="14" ry="11"/>
+          <ellipse cx="546" cy="152" rx="14" ry="11"/>
+          <ellipse cx="534" cy="143" rx="25" ry="21"/>
+          <!-- HAGIA SOPHIA (Ayasofya) — 4 tall Ottoman minarets + Byzantine dome -->
+          <rect x="558" y="40" width="7" height="180"/><polygon points="555,40 565,40 560,18"/>
+          <rect x="701" y="40" width="7" height="180"/><polygon points="698,40 708,40 703,18"/>
+          <rect x="572" y="66" width="6" height="154"/><polygon points="569,66 578,66 573,46"/>
+          <rect x="688" y="66" width="6" height="154"/><polygon points="685,66 694,66 689,46"/>
+          <rect x="560" y="126" width="146" height="94"/>
+          <ellipse cx="588" cy="126" rx="31" ry="26"/>
+          <ellipse cx="678" cy="126" rx="31" ry="26"/>
+          <ellipse cx="633" cy="92" rx="66" ry="57"/>
+          <!-- Gap buildings -->
+          <rect x="714" y="160" width="20" height="60"/><rect x="736" y="154" width="16" height="66"/>
+          <rect x="754" y="167" width="14" height="53"/>
+          <!-- BLUE MOSQUE (Sultan Ahmed Camii) — 6 minarets -->
+          <rect x="773" y="26" width="6" height="194"/><polygon points="770,26 779,26 774,4"/>
+          <rect x="899" y="26" width="6" height="194"/><polygon points="896,26 905,26 900,4"/>
+          <rect x="789" y="50" width="5" height="170"/><polygon points="786,50 794,50 790,30"/>
+          <rect x="884" y="50" width="5" height="170"/><polygon points="881,50 889,50 885,30"/>
+          <rect x="805" y="66" width="4" height="154"/><polygon points="803,66 809,66 806,50"/>
+          <rect x="869" y="66" width="4" height="154"/><polygon points="867,66 873,66 870,50"/>
+          <rect x="771" y="126" width="136" height="94"/>
+          <ellipse cx="795" cy="126" rx="25" ry="21"/>
+          <ellipse cx="883" cy="126" rx="25" ry="21"/>
+          <ellipse cx="839" cy="96" rx="58" ry="52"/>
+          <!-- Buildings — Bosphorus approach -->
+          <rect x="912" y="159" width="26" height="61"/><rect x="940" y="150" width="20" height="70"/>
+          <rect x="962" y="163" width="22" height="57"/><rect x="986" y="153" width="18" height="67"/>
+          <rect x="1006" y="166" width="24" height="54"/><rect x="1032" y="156" width="16" height="64"/>
+          <rect x="1050" y="163" width="18" height="57"/>
+          <!-- KIZ KULESI (Maiden's Tower) — small island tower in the Bosphorus -->
+          <rect x="1070" y="207" width="18" height="6"/>
+          <rect x="1073" y="194" width="12" height="15"/>
+          <rect x="1071" y="190" width="16" height="6"/>
+          <polygon points="1072,190 1087,190 1079,175"/>
+          <rect x="1054" y="212" width="18" height="3"/>
+          <!-- BOSPHORUS BRIDGE (Boğaziçi Köprüsü, 1973) -->
+          <rect x="1094" y="58" width="16" height="162"/><rect x="1092" y="52" width="20" height="10"/>
+          <rect x="1318" y="58" width="16" height="162"/><rect x="1316" y="52" width="20" height="10"/>
+          <rect x="1094" y="161" width="240" height="9"/>
+          <path d="M1102,64 C1148,64 1164,163 1228,163" class="ist-stroke"/>
+          <path d="M1102,64 C1062,76 1042,170 994,171" class="ist-stroke"/>
+          <path d="M1326,64 C1280,64 1264,163 1200,163" class="ist-stroke"/>
+          <path d="M1326,64 C1366,76 1386,168 1440,163" class="ist-stroke"/>
+          <!-- Asian side buildings -->
+          <rect x="1348" y="153" width="22" height="67"/><rect x="1372" y="163" width="28" height="57"/>
+          <rect x="1402" y="146" width="38" height="74"/>
+        </g>
+        <path d="M0,198 Q360,188 720,198 Q1080,208 1440,198 L1440,220 L0,220 Z" class="ist-sea"/>
+      </svg>
+    </div>
+    <div class="hero-content">
+        <div class="hero-badge reveal" data-delay="0">
+            <span class="badge-pulse"></span>CANLI KAYIT AÇIK<span class="badge-pulse"></span>
+        </div>
+        <h1 class="hero-title reveal" data-delay="200">
+            <span class="glitch" data-text="FenTECH">FenTECH</span>
+            <span class="hero-yr">2026</span>
+        </h1>
+        <div class="hero-festival-name reveal" data-delay="300">
+            Uluslararası Bilim, Teknoloji ve İnovasyon Festivali
+        </div>
+        <div class="hero-meta reveal" data-delay="500">
+            <span>📅 23–24 Haziran 2026</span>
+            <span class="hero-sep">|</span>
+            <span>📍 Bahçelievler, İstanbul</span>
+        </div>
+        <div class="hero-btns reveal" data-delay="700">
+            <a href="#register" class="btn-primary">Hemen Kayıt Ol</a>
+            <a href="#competitions" class="btn-outline">Yarışmaları Keşfet</a>
+        </div>
+    </div>
+    <div class="hero-floaters">
+        <div class="floater f1">⚡</div>
+        <div class="floater f2">🤖</div>
+        <div class="floater f3">💡</div>
+        <div class="floater f4">🔬</div>
+        <div class="floater f5">⚙️</div>
+        <div class="floater f6">📡</div>
+    </div>
+    <a href="#stats" class="scroll-hint">
+        <div class="scroll-mouse"><div class="scroll-whl"></div></div>
+        <span>Keşfet</span>
+    </a>
+</section>
+
+<!-- ═══ STATS ═══ -->
+<section id="stats">
+    <div class="stats-wrap">
+        <div class="stat-card" data-target="5000">
+            <div class="stat-icon">👥</div>
+            <div class="stat-num"><span class="counter">0</span>+</div>
+            <div class="stat-lbl">Katılımcı</div>
+        </div>
+        <div class="stat-card" data-target="5">
+            <div class="stat-icon">🏆</div>
+            <div class="stat-num"><span class="counter">0</span></div>
+            <div class="stat-lbl">Yarışma Kategorisi</div>
+        </div>
+        <div class="stat-card" data-target="500000">
+            <div class="stat-icon">💰</div>
+            <div class="stat-num"><span class="counter">0</span> ₺</div>
+            <div class="stat-lbl">Toplam Ödül Havuzu</div>
+        </div>
+        <div class="stat-card" data-target="2">
+            <div class="stat-icon">📅</div>
+            <div class="stat-num"><span class="counter">0</span></div>
+            <div class="stat-lbl">Festival Günü</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+    <div class="sec-wrap">
+        <div class="sec-hdr reveal">
+            <div class="sec-tag">HAKKIMIZDA</div>
+            <h2 class="sec-title">FenTECH Nedir?</h2>
+            <div class="sec-line"></div>
+        </div>
+        <div class="about-grid">
+            <div class="about-visual reveal" data-delay="0">
+                <div class="brain-scene">
+                    <div class="orbit orbit1">
+                        <div class="orbit-label">Yenilikçi Çözümler</div>
+                        <div class="orbit-dot"></div>
+                    </div>
+                    <div class="orbit orbit2">
+                        <div class="orbit-label">Stratejik Planlama</div>
+                        <div class="orbit-dot"></div>
+                    </div>
+                    <div class="orbit orbit3">
+                        <div class="orbit-label">Sürdürülebilir Gelecek</div>
+                        <div class="orbit-dot"></div>
+                    </div>
+                    <div class="brain-core">
+                        <div class="brain-emoji">🧠</div>
+                        <div class="brain-glow"></div>
+                    </div>
+                    <span class="fi-icon fi1">💡</span>
+                    <span class="fi-icon fi2">⚙️</span>
+                    <span class="fi-icon fi3">🔬</span>
+                    <span class="fi-icon fi4">🚀</span>
+                </div>
+            </div>
+            <div class="about-txt reveal" data-delay="200">
+                <p class="about-lead">
+                    FenTECH, Türkiye'nin geleceğini şekillendirecek genç yetenekleri bir araya getiren
+                    kapsamlı bir teknoloji ve bilim festivalidir.
+                </p>
+                <p class="about-body">
+                    Yapay zeka, robotik, sürdürülebilir teknoloji ve daha fazlasında yarışabilir;
+                    endüstri liderleriyle tanışabilir, workshoplara katılabilirsin.
+                </p>
+                <div class="about-features">
+                    <div class="af-item">
+                        <div class="af-icon">🎯</div>
+                        <div><strong>Problem Analizi</strong><p>Gerçek dünya sorunlarını tespit et ve derinlemesine analiz et</p></div>
+                    </div>
+                    <div class="af-item">
+                        <div class="af-icon">💡</div>
+                        <div><strong>Çözüm Geliştirme</strong><p>Yenilikçi ve sürdürülebilir teknolojik çözümler üret</p></div>
+                    </div>
+                    <div class="af-item">
+                        <div class="af-icon">🚀</div>
+                        <div><strong>Çözüm Uygulama</strong><p>Projeni hayata geçir, jüriye sun ve ödül kazan</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ COUNTDOWN ═══ -->
+<section id="countdown">
+    <div class="cd-bg"></div>
+    <div class="cd-content">
+        <p class="cd-pre reveal">FenTECH 2026'ya Kalan Süre</p>
+        <div class="cd-timer reveal" data-delay="200">
+            <div class="cd-unit">
+                <div class="cd-num" id="cdDays">0</div>
+                <div class="cd-lbl">Gün</div>
+            </div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit">
+                <div class="cd-num" id="cdHours">00</div>
+                <div class="cd-lbl">Saat</div>
+            </div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit">
+                <div class="cd-num" id="cdMins">00</div>
+                <div class="cd-lbl">Dakika</div>
+            </div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit">
+                <div class="cd-num" id="cdSecs">00</div>
+                <div class="cd-lbl">Saniye</div>
+            </div>
+        </div>
+        <p class="cd-date reveal" data-delay="400">📅 23 Haziran 2026 &nbsp;•&nbsp; 📍 Bahçelievler 15 Temmuz Şehitleri Teknoloji Proje AİHL</p>
+        <a href="#register" class="btn-primary reveal" data-delay="600">Yerimizi Ayırt</a>
+    </div>
+</section>
+
+<!-- ═══ COMPETITIONS ═══ -->
+<section id="competitions">
+    <div class="sec-wrap">
+        <div class="sec-hdr reveal">
+            <div class="sec-tag">YARIŞMALAR</div>
+            <h2 class="sec-title">Kategoriler</h2>
+            <div class="sec-line"></div>
+            <p class="sec-sub">5 farklı kategoride yeteneklerini sergile, ödülleri kap ve geleceği şekillendir</p>
+        </div>
+        <div class="comp-grid comp-grid-5">
+
+            <div class="comp-card reveal" data-delay="0" data-comp="sorun">
+                <div class="cc-accent" style="--c:#00ff88"></div>
+                <div class="cc-body" onclick="openModal('sorun')">
+                    <div class="cc-icon">🔬</div>
+                    <h3 class="cc-title">"SORUN ! Çözen Nesiller" Proje Yarışması</h3>
+                    <p class="cc-desc">STEM disiplinleri ile gerçek yaşam problemlerine çözüm üret; prototip tasarla ve jüriye sun</p>
+                    <div class="cc-prize"><span>Kategori</span><strong>STEM Proje</strong></div>
+                </div>
+                <div class="cc-actions">
+                    <button class="cc-btn-pdf" onclick="openPdf('sorun')">📄 Şartnameyi Gör</button>
+                    <button class="cc-btn-reg" onclick="openRegLink('sorun')">📝 Başvur</button>
+                </div>
+            </div>
+
+            <div class="comp-card reveal" data-delay="100" data-comp="hackathon">
+                <div class="cc-accent" style="--c:#7b2fff"></div>
+                <div class="cc-body" onclick="openModal('hackathon')">
+                    <div class="cc-icon">💻</div>
+                    <h3 class="cc-title">Hackathon Yarışması</h3>
+                    <p class="cc-desc">"Serbest İnovasyon: Sınırsız Çözümler" temasıyla yapay zekâ destekli dijital çözümler geliştir</p>
+                    <div class="cc-prize"><span>Kategori</span><strong>Yazılım &amp; AI</strong></div>
+                </div>
+                <div class="cc-actions">
+                    <button class="cc-btn-pdf" onclick="openPdf('hackathon')">📄 Şartnameyi Gör</button>
+                    <button class="cc-btn-reg" onclick="openRegLink('hackathon')">📝 Başvur</button>
+                </div>
+            </div>
+
+            <div class="comp-card reveal" data-delay="200" data-comp="robofutbol">
+                <div class="cc-accent" style="--c:#ff006e"></div>
+                <div class="cc-body" onclick="openModal('robofutbol')">
+                    <div class="cc-icon">⚽</div>
+                    <h3 class="cc-title">RoboFutbol Ligi</h3>
+                    <p class="cc-desc">3 robottan oluşan takımınla rakip kaleye gol at; en çok gol atan takım kazanır</p>
+                    <div class="cc-prize"><span>Kategori</span><strong>Robot Futbol</strong></div>
+                </div>
+                <div class="cc-actions">
+                    <button class="cc-btn-pdf" onclick="openPdf('robofutbol')">📄 Şartnameyi Gör</button>
+                    <button class="cc-btn-reg" onclick="openRegLink('robofutbol')">📝 Başvur</button>
+                </div>
+            </div>
+
+            <div class="comp-card reveal" data-delay="300" data-comp="ermeydan">
+                <div class="cc-accent" style="--c:#ff9500"></div>
+                <div class="cc-body" onclick="openModal('ermeydan')">
+                    <div class="cc-icon">⚔️</div>
+                    <h3 class="cc-title">Takımlar Er Meydanı</h3>
+                    <p class="cc-desc">İkili robot güreşinde rakibini meydan dışına at; 3 set üzerinden en çok seti alan takım kazanır</p>
+                    <div class="cc-prize"><span>Kategori</span><strong>Robot Güreşi</strong></div>
+                </div>
+                <div class="cc-actions">
+                    <button class="cc-btn-pdf" onclick="openPdf('ermeydan')">📄 Şartnameyi Gör</button>
+                    <button class="cc-btn-reg" onclick="openRegLink('ermeydan')">📝 Başvur</button>
+                </div>
+            </div>
+
+            <div class="comp-card reveal" data-delay="400" data-comp="cizgi">
+                <div class="cc-accent" style="--c:#00f5ff"></div>
+                <div class="cc-body" onclick="openModal('cizgi')">
+                    <div class="cc-icon">🤖</div>
+                    <h3 class="cc-title">Temel Seviye Çizgi İzleyen Robot</h3>
+                    <p class="cc-desc">Otonom robotun siyah parkurdaki beyaz çizgiyi en kısa sürede ve hatasız takip etsin</p>
+                    <div class="cc-prize"><span>Kategori</span><strong>Otonom Robot</strong></div>
+                </div>
+                <div class="cc-actions">
+                    <button class="cc-btn-pdf" onclick="openPdf('cizgi')">📄 Şartnameyi Gör</button>
+                    <button class="cc-btn-reg" onclick="openRegLink('cizgi')">📝 Başvur</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══ MODAL ═══ -->
+<div id="modalOverlay" class="modal-overlay" onclick="closeModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div id="modalBody" class="modal-body"></div>
+        <div id="modalActions" class="modal-actions"></div>
+    </div>
+</div>
+
+<!-- ═══ SCHEDULE ═══ -->
+<section id="schedule">
+    <div class="sec-wrap">
+        <div class="sec-hdr reveal">
+            <div class="sec-tag">ETKİNLİK PROGRAMI</div>
+            <h2 class="sec-title">Program</h2>
+            <div class="sec-line"></div>
+        </div>
+        <div class="sched-tabs reveal" data-delay="200">
+            <button class="stab active" onclick="switchDay(0,this)">23 Haziran</button>
+            <button class="stab" onclick="switchDay(1,this)">24 Haziran</button>
+        </div>
+        <div class="sched-timeline" id="schedTimeline"></div>
+    </div>
+</section>
+
+<!-- ═══ REGISTER ═══ -->
+<section id="register">
+    <div class="sec-wrap">
+        <div class="sec-hdr reveal">
+            <div class="sec-tag">KATILIM</div>
+            <h2 class="sec-title">Kayıt Ol</h2>
+            <div class="sec-line"></div>
+            <p class="sec-sub">FenTECH 2026'ya kayıt yap ve geleceği şekillendirmeye başla</p>
+        </div>
+        <div class="reg-container reveal" data-delay="200">
+            <div class="reg-info">
+                <div class="ri-item"><span>📅</span><div><strong>Son Kayıt Tarihi</strong><span>1 Haziran 2026</span></div></div>
+                <div class="ri-item"><span>🎓</span><div><strong>Katılım Koşulu</strong><span>Lise Öğrenci &amp; Öğretmenler</span></div></div>
+                <div class="ri-item"><span>💰</span><div><strong>Kayıt Ücreti</strong><span>Tamamen Ücretsiz</span></div></div>
+                <div class="ri-item"><span>🏆</span><div><strong>Toplam Ödül</strong><span>500.000 ₺+</span></div></div>
+                <div class="reg-img-box">
+                    <div class="rib-icon">FenTECH<br><span>2026</span></div>
+                    <p>Uluslararası Bilim, Teknoloji &amp; İnovasyon Festivali</p>
+                </div>
+            </div>
+            <div class="reg-form-wrap">
+                <form id="regForm" onsubmit="submitForm(event)" novalidate autocomplete="off">
+                    <!-- Ad / Soyad -->
+                    <div class="form-row">
+                        <div class="fg">
+                            <label>Ad *</label>
+                            <input type="text" name="firstName" required placeholder="Adınız">
+                        </div>
+                        <div class="fg">
+                            <label>Soyad *</label>
+                            <input type="text" name="lastName" required placeholder="Soyadınız">
+                        </div>
+                    </div>
+                    <!-- E-posta / Telefon -->
+                    <div class="form-row">
+                        <div class="fg">
+                            <label>E-posta *</label>
+                            <input type="email" name="email" required placeholder="ornek@email.com">
+                        </div>
+                        <div class="fg">
+                            <label>Telefon *</label>
+                            <input type="tel" name="phone" required placeholder="05XX XXX XX XX">
+                        </div>
+                    </div>
+                    <!-- Rol Seçimi -->
+                    <div class="fg full">
+                        <label>Rolünüz *</label>
+                        <div class="role-toggle">
+                            <label class="role-opt">
+                                <input type="radio" name="role" value="student" required onchange="onRoleChange(this)">
+                                <span class="role-label"><span class="role-icon">🎓</span>Öğrenci</span>
+                            </label>
+                            <label class="role-opt">
+                                <input type="radio" name="role" value="teacher" onchange="onRoleChange(this)">
+                                <span class="role-label"><span class="role-icon">👨‍🏫</span>Öğretmen</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Koşullu Alan: Öğrenci → Sınıf -->
+                    <div class="fg full role-field" id="fieldClass" style="display:none">
+                        <label>Sınıf *</label>
+                        <select name="class" id="classSelect">
+                            <option value="">Sınıfınızı seçin...</option>
+                            <option value="hazirlik">Hazırlık</option>
+                            <option value="9">9. Sınıf</option>
+                            <option value="10">10. Sınıf</option>
+                            <option value="11">11. Sınıf</option>
+                            <option value="12">12. Sınıf</option>
+                        </select>
+                    </div>
+                    <!-- Koşullu Alan: Öğretmen → Kurum -->
+                    <div class="fg full role-field" id="fieldInstitution" style="display:none">
+                        <label>Kurum Adı *</label>
+                        <input type="text" name="institution" id="institutionInput" placeholder="Görev yaptığınız okul / kurum">
+                    </div>
+                    <!-- Yarışma Seçimi -->
+                    <div class="fg full">
+                        <label>Yarışma Kategorisi *</label>
+                        <select name="competition" required>
+                            <option value="">Kategori seçin...</option>
+                            <option value="sorun">"SORUN ! Çözen Nesiller" Proje Yarışması</option>
+                            <option value="hackathon">Hackathon Yarışması</option>
+                            <option value="robofutbol">RoboFutbol Ligi</option>
+                            <option value="ermeydan">Takımlar Er Meydanı</option>
+                            <option value="cizgi">Temel Seviye Çizgi İzleyen Robot</option>
+                        </select>
+                    </div>
+                    <!-- KVKK Onayı -->
+                    <div class="fg full">
+                        <label class="chk-label">
+                            <input type="checkbox" id="consentBox" required>
+                            <span>Katılım şartnamelerini okudum ve kabul ediyorum *</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        <span>Kaydımı Tamamla</span>
+                    </button>
+                    <p class="reg-err-msg" id="regErrMsg" style="display:none"></p>
+                </form>
+                <div id="regSuccess" class="reg-success" style="display:none">
+                    <div class="rs-icon">✅</div>
+                    <h3>Kaydınız Alındı!</h3>
+                    <p id="regSuccessMsg">FenTECH 2026'ya hoş geldiniz! Bilgileriniz kaydedildi.</p>
+                    <a href="#competitions" class="btn-outline" style="margin-top:1.5rem">Yarışmaları İncele</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section id="faq">
+    <div class="sec-wrap">
+        <div class="sec-hdr reveal">
+            <div class="sec-tag">SORULAR</div>
+            <h2 class="sec-title">Sık Sorulan Sorular</h2>
+            <div class="sec-line"></div>
+        </div>
+        <div class="faq-list reveal" data-delay="200">
+            <div class="faq-item">
+                <button class="faq-q" onclick="toggleFaq(this)">Kim katılabilir? <span>+</span></button>
+                <div class="faq-a">Türkiye'deki tüm lise öğrencileri ve öğretmenler FenTECH 2026'ya katılabilir.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q" onclick="toggleFaq(this)">Kayıt ücreti var mı? <span>+</span></button>
+                <div class="faq-a">Hayır, FenTECH 2026'ya katılım tamamen ücretsizdir.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q" onclick="toggleFaq(this)">Takım kurmak zorunlu mu? <span>+</span></button>
+                <div class="faq-a">Kategori kurallarına göre değişir. Robot kategorileri için takım zorunludur. Detaylar için şartnameleri inceleyiniz.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q" onclick="toggleFaq(this)">Şartnamelere nasıl ulaşabilirim? <span>+</span></button>
+                <div class="faq-a">Yarışmalar bölümündeki her kategori kartında "Şartnameyi Gör" butonuna tıklayarak ilgili PDF şartnameye ulaşabilirsiniz.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q" onclick="toggleFaq(this)">Ödüller ne zaman verilir? <span>+</span></button>
+                <div class="faq-a">Ödüller, 24 Haziran 2026 tarihinde gerçekleştirilecek kapanış töreninde sahiplerine verilecektir.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q" onclick="toggleFaq(this)">Birden fazla kategoriye katılabilir miyim? <span>+</span></button>
+                <div class="faq-a">Her katılımcı/ekip yalnızca bir kategoride yarışabilir. Ancak diğer kategorilerin etkinliklerini izleme ve fuarı gezme hakkınız her zaman mevcuttur.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer id="footer">
+    <div class="footer-circuit"></div>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <div class="footer-logo">Fen<span>TECH</span> <small>2026</small></div>
+            <p class="footer-festival-sub">Uluslararası Bilim, Teknoloji ve İnovasyon Festivali</p>
+            <div class="footer-socials">
+                <a href="#" class="fs-lnk">𝕏</a>
+                <a href="#" class="fs-lnk">IG</a>
+                <a href="#" class="fs-lnk">YT</a>
+                <a href="#" class="fs-lnk">IN</a>
+            </div>
+        </div>
+        <div class="footer-links">
+            <div class="fl-col">
+                <h4>Festival</h4>
+                <a href="#about">Hakkında</a>
+                <a href="#schedule">Program</a>
+                <a href="#competitions">Yarışmalar</a>
+            </div>
+            <div class="fl-col">
+                <h4>Katılım</h4>
+                <a href="#register">Kayıt Ol</a>
+                <a href="#faq">SSS</a>
+            </div>
+            <div class="fl-col">
+                <h4>İletişim</h4>
+                <a href="mailto:info@fentech2026.org">info@fentech2026.org</a>
+                <a href="#">Bize Ulaşın</a>
+            </div>
+        </div>
+        <!-- Organizer Logo -->
+        <div class="footer-logos">
+            <p class="fl-org-title">Organizatör</p>
+            <div class="fl-logo-row">
+                <div class="fl-logo-item">
+                    <object data="assets/dinegitim-logo.pdf" type="application/pdf" class="footer-logo-pdf" title="MEB Din Öğretimi Genel Müdürlüğü">
+                        <div class="footer-logo-fallback">MEB<br><small>Din Öğretimi<br>Genel Müdürlüğü</small></div>
+                    </object>
+                    <div class="fl-logo-text">
+                        <span class="fl-logo-name">Din Öğretimi</span>
+                        <span class="fl-logo-sub">Genel Müdürlüğü</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 FenTECH — Uluslararası Bilim, Teknoloji ve İnovasyon Festivali. Tüm hakları saklıdır.</p>
+        <p>Bahçelievler 15 Temmuz Şehitleri Teknoloji Proje AİHL • İstanbul</p>
+    </div>
+</footer>
+
+<!-- ═══ ADMIN OVERLAY (hash: #admin) ═══ -->
+<div id="adminWrapper">
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="login-logo">Fen<span>TECH</span></div>
+      <div class="login-sub">Admin Paneli</div>
+      <form id="loginForm" onsubmit="doLogin(event)">
+        <div class="lfg">
+          <label>Kullanıcı Adı</label>
+          <input type="text" id="loginUser" placeholder="Kullanıcı adı" autocomplete="off">
+        </div>
+        <div class="lfg">
+          <label>Şifre</label>
+          <input type="password" id="loginPass" placeholder="••••••••">
+        </div>
+        <p id="loginErr" class="login-err" style="display:none">Kullanıcı adı veya şifre hatalı.</p>
+        <button type="submit" class="login-btn">Giriş Yap</button>
+      </form>
+      <button class="login-back-btn" onclick="window.location.hash=''">← Siteye Dön</button>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div id="adminPanel" class="admin-panel" style="display:none">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sb-logo">Fen<span>TECH</span><br><small>Admin</small></div>
+      <nav class="sb-nav">
+        <button class="sb-link active" onclick="showTab('dashboard',this)">📊 Genel Bakış</button>
+        <button class="sb-link" onclick="showTab('competitions',this)">🏆 Yarışmalar</button>
+        <button class="sb-link" onclick="showTab('schedule',this)">📅 Program</button>
+        <button class="sb-link" onclick="showTab('participants',this)">👥 Katılımcılar</button>
+      </nav>
+      <button class="sb-logout" onclick="doLogout()">🚪 Çıkış Yap</button>
+      <button class="sb-logout" style="margin-top:0.5rem;background:rgba(0,245,255,0.08);border-color:rgba(0,245,255,0.2);color:var(--c1)" onclick="window.location.hash=''">🌐 Siteye Dön</button>
+    </aside>
+
+    <!-- Main content -->
+    <main class="admin-main">
+
+      <!-- Dashboard -->
+      <section id="tab-dashboard" class="tab-content active">
+        <div class="tab-header">
+          <h1>Genel Bakış</h1>
+          <p class="tab-sub">FenTECH 2026 istatistikleri ve hızlı düzenlemeler</p>
+        </div>
+        <div class="dash-stats">
+          <div class="ds-card"><div class="ds-icon">👥</div><div class="ds-num" id="dashRegCount">0</div><div class="ds-lbl">Toplam Kayıtlı</div></div>
+          <div class="ds-card"><div class="ds-icon">🏆</div><div class="ds-num">5</div><div class="ds-lbl">Yarışma Kategorisi</div></div>
+          <div class="ds-card"><div class="ds-icon">📅</div><div class="ds-num">2</div><div class="ds-lbl">Etkinlik Günü</div></div>
+          <div class="ds-card"><div class="ds-icon">💰</div><div class="ds-num" id="dashPrize">500.000 ₺</div><div class="ds-lbl">Ödül Havuzu</div></div>
+        </div>
+        <div class="panel-card" style="margin-top:2rem">
+          <h2 class="pc-title">Site İstatistiklerini Düzenle</h2>
+          <div class="form-row-2">
+            <div class="afg"><label>Katılımcı Sayısı (Hedef)</label><input type="number" id="statParticipant" placeholder="5000"></div>
+            <div class="afg"><label>Toplam Ödül Havuzu (₺)</label><input type="number" id="statPrize" placeholder="500000"></div>
+          </div>
+          <button class="a-btn-primary" onclick="saveStats()">Kaydet</button>
+          <p class="save-msg" id="statsSaveMsg" style="display:none">✅ Kaydedildi!</p>
+        </div>
+        <div class="panel-card" style="margin-top:2rem">
+          <h2 class="pc-title">Son Kayıtlar</h2>
+          <div id="recentRegs" class="recent-table-wrap"></div>
+        </div>
+      </section>
+
+      <!-- Competitions -->
+      <section id="tab-competitions" class="tab-content">
+        <div class="tab-header">
+          <h1>Yarışma Yönetimi</h1>
+          <p class="tab-sub">Yarışma adlarını, başvuru linklerini ve şartname PDF dosyalarını yükleyin</p>
+        </div>
+        <div id="compEditors" class="comp-editors"></div>
+        <button class="a-btn-primary" style="margin-top:1.5rem" onclick="saveCompSettings()">Tüm Değişiklikleri Kaydet</button>
+        <p class="save-msg" id="compSaveMsg" style="display:none">✅ Yarışma bilgileri güncellendi!</p>
+      </section>
+
+      <!-- Schedule -->
+      <section id="tab-schedule" class="tab-content">
+        <div class="tab-header">
+          <h1>Program Yönetimi</h1>
+          <p class="tab-sub">Günlük etkinlikleri saat saat düzenleyin</p>
+        </div>
+        <div class="sched-day-tabs">
+          <button class="sdt active" onclick="showSchedDay(0,this)">23 Haziran</button>
+          <button class="sdt" onclick="showSchedDay(1,this)">24 Haziran</button>
+        </div>
+        <div id="schedEditor" class="sched-editor"></div>
+        <div class="sched-actions">
+          <button class="a-btn-outline" onclick="addSchedItem()">+ Etkinlik Ekle</button>
+          <button class="a-btn-primary" onclick="saveSchedule()">Programı Kaydet</button>
+        </div>
+        <p class="save-msg" id="schedSaveMsg" style="display:none">✅ Program güncellendi!</p>
+      </section>
+
+      <!-- Participants -->
+      <section id="tab-participants" class="tab-content">
+        <div class="tab-header">
+          <h1>Katılımcı Listesi</h1>
+          <p class="tab-sub">Kayıtlı katılımcıları görüntüleyin ve Excel olarak indirin</p>
+        </div>
+        <div class="part-toolbar">
+          <input type="text" id="searchPart" placeholder="🔍 İsim, e-posta veya yarışma ara..." oninput="filterParticipants()">
+          <button class="a-btn-primary" onclick="exportExcel()">📥 Excel İndir</button>
+          <button class="a-btn-danger" onclick="clearAllRegs()">🗑 Tüm Kayıtları Sil</button>
+        </div>
+        <div id="partTable" class="part-table-wrap"></div>
+        <p class="part-count" id="partCount"></p>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<!-- SheetJS for admin Excel export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="admin/admin.js"></script>
+</body>
+</html>

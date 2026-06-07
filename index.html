@@ -29,6 +29,16 @@
             <stop offset="55%" stop-color="#ff9500" stop-opacity="0.07"/>
             <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
           </radialGradient>
+          <!-- Soft photographic glow for window lights -->
+          <filter id="igLightGlow" x="-200%" y="-200%" width="500%" height="500%">
+            <feGaussianBlur stdDeviation="1.4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <!-- Warm shimmer fading into the Bosphorus -->
+          <linearGradient id="igReflGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ffd27a" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#ffd27a" stop-opacity="0"/>
+          </linearGradient>
         </defs>
         <rect x="0" y="0" width="1440" height="220" fill="url(#igCityGlow)"/>
         <g class="ist-fill">
@@ -133,8 +143,12 @@
           <rect x="1348" y="153" width="22" height="67"/><rect x="1372" y="163" width="28" height="57"/>
           <rect x="1402" y="146" width="38" height="74"/>
         </g>
+        <!-- City lights — warm glowing windows for a more photographic, lived-in skyline -->
+        <g class="ist-lights" filter="url(#igLightGlow)"><circle cx="7.6" cy="210.6" r="0.89" fill="#ffc15c" opacity="0.59"/><circle cx="16.7" cy="202.6" r="0.83" fill="#ffe2a8" opacity="0.65"/><circle cx="44.2" cy="193.8" r="0.62" fill="#ffe2a8" opacity="0.79"/><circle cx="52.3" cy="202.4" r="0.55" fill="#ffd27a" opacity="0.46"/><circle cx="63.7" cy="199.8" r="0.94" fill="#ffd27a" opacity="0.75"/><circle cx="61.8" cy="207.4" r="0.61" fill="#ffd27a" opacity="0.76"/><circle cx="69.3" cy="189.0" r="0.84" fill="#ffc15c" opacity="0.59"/><circle cx="78.7" cy="181.2" r="0.65" fill="#ffe2a8" opacity="0.53"/><circle cx="84.6" cy="198.3" r="0.77" fill="#ffb74d" opacity="0.61"/><circle cx="98.6" cy="202.9" r="0.53" fill="#ffc15c" opacity="0.44"/><circle cx="108.2" cy="190.7" r="0.70" fill="#ffd27a" opacity="0.48"/><circle cx="108.6" cy="206.9" r="0.82" fill="#ffe2a8" opacity="0.64"/><circle cx="127.8" cy="178.7" r="0.66" fill="#ffd27a" opacity="0.81"/><circle cx="133.6" cy="194.0" r="0.86" fill="#ffe2a8" opacity="0.68"/><circle cx="147.9" cy="177.0" r="1.02" fill="#ffc15c" opacity="0.70"/><circle cx="136.4" cy="205.1" r="1.00" fill="#ffe2a8" opacity="0.88"/><circle cx="162.9" cy="190.4" r="0.51" fill="#ffe2a8" opacity="0.56"/><circle cx="166.6" cy="190.1" r="0.87" fill="#ffd27a" opacity="0.45"/><circle cx="162.9" cy="208.7" r="1.05" fill="#ffd27a" opacity="0.38"/><circle cx="162.9" cy="202.6" r="0.83" fill="#ffc15c" opacity="0.73"/><circle cx="207.2" cy="176.6" r="0.91" fill="#ffe2a8" opacity="0.41"/><circle cx="197.8" cy="158.9" r="0.75" fill="#ffe2a8" opacity="0.73"/><circle cx="209.9" cy="161.4" r="0.92" fill="#ffb74d" opacity="0.61"/><circle cx="202.4" cy="176.4" r="0.75" fill="#ffd27a" opacity="0.84"/><circle cx="230.5" cy="199.5" r="1.04" fill="#ffb74d" opacity="0.57"/><circle cx="229.8" cy="184.0" r="1.04" fill="#ffc15c" opacity="0.79"/><circle cx="252.2" cy="175.1" r="0.68" fill="#ffe2a8" opacity="0.73"/><circle cx="251.9" cy="174.1" r="0.85" fill="#ffd27a" opacity="0.52"/><circle cx="270.1" cy="202.7" r="0.68" fill="#ffd27a" opacity="0.82"/><circle cx="273.1" cy="175.1" r="0.88" fill="#ffb74d" opacity="0.54"/><circle cx="274.5" cy="205.8" r="1.01" fill="#ffd27a" opacity="0.48"/><circle cx="284.6" cy="203.9" r="0.92" fill="#ffe2a8" opacity="0.69"/><circle cx="282.4" cy="167.3" r="1.02" fill="#ffd27a" opacity="0.86"/><circle cx="296.8" cy="194.3" r="0.54" fill="#ffc15c" opacity="0.70"/><circle cx="311.3" cy="189.7" r="0.83" fill="#ffb74d" opacity="0.36"/><circle cx="299.4" cy="192.9" r="0.72" fill="#ffd27a" opacity="0.72"/><circle cx="322.2" cy="183.0" r="0.90" fill="#ffc15c" opacity="0.87"/><circle cx="322.9" cy="183.6" r="1.00" fill="#ffb74d" opacity="0.62"/><circle cx="322.8" cy="187.1" r="0.93" fill="#ffe2a8" opacity="0.50"/><circle cx="355.4" cy="181.7" r="0.72" fill="#ffb74d" opacity="0.78"/><circle cx="353.0" cy="201.7" r="0.99" fill="#ffc15c" opacity="0.48"/><circle cx="355.5" cy="188.0" r="0.71" fill="#ffe2a8" opacity="0.87"/><circle cx="353.6" cy="165.5" r="0.86" fill="#ffb74d" opacity="0.71"/><circle cx="370.7" cy="212.7" r="0.63" fill="#ffe2a8" opacity="0.76"/><circle cx="371.3" cy="193.4" r="0.99" fill="#ffd27a" opacity="0.38"/><circle cx="379.6" cy="214.8" r="0.86" fill="#ffc15c" opacity="0.86"/><circle cx="390.0" cy="189.0" r="0.56" fill="#ffe2a8" opacity="0.61"/><circle cx="392.3" cy="214.6" r="0.75" fill="#ffe2a8" opacity="0.78"/><circle cx="391.0" cy="189.9" r="0.56" fill="#ffd27a" opacity="0.41"/><circle cx="393.5" cy="200.0" r="0.76" fill="#ffc15c" opacity="0.51"/><circle cx="390.9" cy="200.3" r="0.59" fill="#ffe2a8" opacity="0.80"/><circle cx="412.2" cy="187.0" r="0.87" fill="#ffc15c" opacity="0.84"/><circle cx="493.2" cy="187.3" r="0.79" fill="#ffe2a8" opacity="0.43"/><circle cx="481.1" cy="187.5" r="0.65" fill="#ffc15c" opacity="0.68"/><circle cx="478.8" cy="176.2" r="0.87" fill="#ffd27a" opacity="0.54"/><circle cx="545.9" cy="178.8" r="1.10" fill="#ffd27a" opacity="0.74"/><circle cx="539.5" cy="204.4" r="0.74" fill="#ffd27a" opacity="0.43"/><circle cx="532.9" cy="177.9" r="0.98" fill="#ffc15c" opacity="0.37"/><circle cx="516.4" cy="188.0" r="0.79" fill="#ffb74d" opacity="0.55"/><circle cx="670.8" cy="204.0" r="0.80" fill="#ffe2a8" opacity="0.55"/><circle cx="589.2" cy="157.7" r="1.00" fill="#ffc15c" opacity="0.58"/><circle cx="680.1" cy="166.4" r="0.70" fill="#ffc15c" opacity="0.36"/><circle cx="565.6" cy="173.1" r="1.09" fill="#ffd27a" opacity="0.57"/><circle cx="698.0" cy="194.3" r="0.91" fill="#ffc15c" opacity="0.58"/><circle cx="726.0" cy="175.7" r="0.61" fill="#ffe2a8" opacity="0.38"/><circle cx="728.5" cy="197.0" r="0.64" fill="#ffc15c" opacity="0.76"/><circle cx="723.4" cy="193.5" r="0.71" fill="#ffe2a8" opacity="0.44"/><circle cx="729.3" cy="179.1" r="0.71" fill="#ffd27a" opacity="0.68"/><circle cx="721.8" cy="176.0" r="0.64" fill="#ffb74d" opacity="0.87"/><circle cx="743.1" cy="190.0" r="0.64" fill="#ffc15c" opacity="0.45"/><circle cx="741.9" cy="200.9" r="0.64" fill="#ffc15c" opacity="0.67"/><circle cx="745.2" cy="189.1" r="1.02" fill="#ffe2a8" opacity="0.36"/><circle cx="757.3" cy="212.4" r="1.07" fill="#ffd27a" opacity="0.55"/><circle cx="761.6" cy="190.7" r="0.87" fill="#ffe2a8" opacity="0.77"/><circle cx="764.1" cy="191.2" r="0.70" fill="#ffd27a" opacity="0.59"/><circle cx="762.8" cy="210.2" r="1.00" fill="#ffe2a8" opacity="0.41"/><circle cx="784.2" cy="186.3" r="0.73" fill="#ffb74d" opacity="0.76"/><circle cx="812.9" cy="164.5" r="0.96" fill="#ffc15c" opacity="0.78"/><circle cx="899.2" cy="188.8" r="1.06" fill="#ffb74d" opacity="0.37"/><circle cx="850.7" cy="147.5" r="0.77" fill="#ffb74d" opacity="0.88"/><circle cx="894.5" cy="201.3" r="0.94" fill="#ffb74d" opacity="0.42"/><circle cx="917.5" cy="181.1" r="0.92" fill="#ffd27a" opacity="0.36"/><circle cx="915.4" cy="198.2" r="0.73" fill="#ffb74d" opacity="0.45"/><circle cx="914.8" cy="183.7" r="0.52" fill="#ffd27a" opacity="0.79"/><circle cx="926.5" cy="180.0" r="0.63" fill="#ffe2a8" opacity="0.80"/><circle cx="955.1" cy="167.9" r="0.90" fill="#ffc15c" opacity="0.56"/><circle cx="957.1" cy="210.6" r="0.91" fill="#ffb74d" opacity="0.53"/><circle cx="967.6" cy="199.8" r="0.58" fill="#ffc15c" opacity="0.88"/><circle cx="972.5" cy="180.1" r="0.92" fill="#ffd27a" opacity="0.56"/><circle cx="965.3" cy="197.9" r="0.62" fill="#ffc15c" opacity="0.86"/><circle cx="970.0" cy="208.7" r="0.96" fill="#ffb74d" opacity="0.67"/><circle cx="978.1" cy="195.9" r="0.58" fill="#ffd27a" opacity="0.83"/><circle cx="996.7" cy="179.8" r="0.86" fill="#ffd27a" opacity="0.50"/><circle cx="997.4" cy="211.3" r="0.55" fill="#ffe2a8" opacity="0.67"/><circle cx="1010.3" cy="202.9" r="0.71" fill="#ffe2a8" opacity="0.59"/><circle cx="1013.9" cy="183.6" r="0.97" fill="#ffb74d" opacity="0.83"/><circle cx="1021.8" cy="180.8" r="0.59" fill="#ffc15c" opacity="0.58"/><circle cx="1022.5" cy="191.3" r="0.75" fill="#ffe2a8" opacity="0.58"/><circle cx="1042.8" cy="210.7" r="0.53" fill="#ffc15c" opacity="0.71"/><circle cx="1040.5" cy="198.0" r="1.06" fill="#ffc15c" opacity="0.81"/><circle cx="1039.6" cy="208.6" r="0.59" fill="#ffd27a" opacity="0.83"/><circle cx="1058.9" cy="198.7" r="0.60" fill="#ffc15c" opacity="0.88"/><circle cx="1063.2" cy="179.3" r="1.06" fill="#ffe2a8" opacity="0.39"/><circle cx="1106.8" cy="188.3" r="1.06" fill="#ffd27a" opacity="0.50"/><circle cx="1105.7" cy="127.6" r="0.97" fill="#ffb74d" opacity="0.40"/><circle cx="1101.2" cy="190.8" r="0.51" fill="#ffc15c" opacity="0.85"/><circle cx="1099.0" cy="141.6" r="1.02" fill="#ffd27a" opacity="0.87"/><circle cx="1325.4" cy="174.4" r="0.63" fill="#ffc15c" opacity="0.50"/><circle cx="1320.5" cy="169.1" r="0.70" fill="#ffe2a8" opacity="0.35"/><circle cx="1356.4" cy="188.0" r="0.66" fill="#ffb74d" opacity="0.83"/><circle cx="1354.1" cy="181.1" r="0.54" fill="#ffe2a8" opacity="0.88"/><circle cx="1381.3" cy="197.3" r="0.76" fill="#ffe2a8" opacity="0.62"/><circle cx="1376.8" cy="212.1" r="0.52" fill="#ffe2a8" opacity="0.51"/><circle cx="1393.5" cy="212.3" r="1.06" fill="#ffe2a8" opacity="0.40"/><circle cx="1392.3" cy="178.8" r="1.08" fill="#ffe2a8" opacity="0.41"/><circle cx="1387.1" cy="214.4" r="1.08" fill="#ffd27a" opacity="0.73"/><circle cx="1405.4" cy="171.7" r="0.55" fill="#ffc15c" opacity="0.46"/><circle cx="1416.3" cy="187.8" r="0.87" fill="#ffe2a8" opacity="0.46"/><circle cx="1414.6" cy="197.7" r="0.82" fill="#ffd27a" opacity="0.72"/><circle cx="1428.0" cy="172.9" r="0.50" fill="#ffc15c" opacity="0.38"/></g>
         <!-- Sea / water with gentle wave -->
         <path d="M0,198 Q360,188 720,198 Q1080,208 1440,198 L1440,220 L0,220 Z" class="ist-sea"/>
+        <!-- Light shimmer reflecting off the Bosphorus surface -->
+        <g class="ist-reflections" fill="url(#igReflGrad)"><rect x="39.1" y="199.2" width="1.8" height="20.8" opacity="0.47"/><rect x="73.7" y="196.0" width="2.7" height="24.0" opacity="0.58"/><rect x="119.4" y="196.4" width="1.2" height="23.6" opacity="0.41"/><rect x="158.7" y="197.5" width="2.7" height="22.5" opacity="0.28"/><rect x="207.1" y="198.9" width="1.9" height="21.1" opacity="0.35"/><rect x="259.2" y="197.8" width="1.6" height="22.2" opacity="0.56"/><rect x="328.9" y="197.1" width="2.3" height="22.9" opacity="0.47"/><rect x="418.6" y="197.5" width="2.9" height="22.5" opacity="0.56"/><rect x="449.4" y="198.1" width="3.3" height="21.9" opacity="0.35"/><rect x="483.4" y="196.8" width="3.3" height="23.2" opacity="0.43"/><rect x="532.6" y="197.6" width="2.7" height="22.4" opacity="0.37"/><rect x="587.1" y="198.8" width="1.7" height="21.2" opacity="0.41"/><rect x="631.4" y="196.8" width="3.2" height="23.2" opacity="0.58"/><rect x="676.9" y="198.4" width="2.3" height="21.6" opacity="0.53"/><rect x="748.5" y="197.1" width="2.9" height="22.9" opacity="0.49"/><rect x="793.5" y="197.8" width="2.9" height="22.2" opacity="0.31"/><rect x="838.4" y="198.6" width="1.2" height="21.4" opacity="0.65"/><rect x="881.8" y="197.2" width="2.4" height="22.8" opacity="0.54"/><rect x="938.5" y="198.0" width="3.0" height="22.0" opacity="0.53"/><rect x="989.1" y="199.0" width="1.8" height="21.0" opacity="0.50"/><rect x="1038.5" y="196.6" width="2.9" height="23.4" opacity="0.55"/><rect x="1079.3" y="197.1" width="1.4" height="22.9" opacity="0.50"/><rect x="1109.0" y="197.3" width="2.0" height="22.7" opacity="0.59"/><rect x="1159.3" y="199.1" width="1.3" height="20.9" opacity="0.26"/><rect x="1208.8" y="198.2" width="2.4" height="21.8" opacity="0.54"/><rect x="1259.4" y="200.0" width="1.2" height="20.0" opacity="0.58"/><rect x="1309.2" y="198.3" width="1.6" height="21.7" opacity="0.57"/><rect x="1358.3" y="196.6" width="3.3" height="23.4" opacity="0.28"/><rect x="1409.0" y="198.8" width="2.1" height="21.2" opacity="0.45"/></g>
       </svg>
     </div>
     <div class="intro-content">
@@ -189,6 +203,16 @@
             <stop offset="55%" stop-color="#ff9500" stop-opacity="0.06"/>
             <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
           </radialGradient>
+          <!-- Soft photographic glow for window lights -->
+          <filter id="hLightGlow" x="-200%" y="-200%" width="500%" height="500%">
+            <feGaussianBlur stdDeviation="1.4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <!-- Warm shimmer fading into the Bosphorus -->
+          <linearGradient id="hReflGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ffd27a" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#ffd27a" stop-opacity="0"/>
+          </linearGradient>
         </defs>
         <rect x="0" y="0" width="1440" height="220" fill="url(#hCityGlow)"/>
         <g class="ist-fill">
@@ -274,7 +298,11 @@
           <rect x="1348" y="153" width="22" height="67"/><rect x="1372" y="163" width="28" height="57"/>
           <rect x="1402" y="146" width="38" height="74"/>
         </g>
+        <!-- City lights — warm glowing windows for a more photographic, lived-in skyline -->
+        <g class="ist-lights" filter="url(#hLightGlow)"><circle cx="7.6" cy="210.6" r="0.89" fill="#ffc15c" opacity="0.59"/><circle cx="16.7" cy="202.6" r="0.83" fill="#ffe2a8" opacity="0.65"/><circle cx="44.2" cy="193.8" r="0.62" fill="#ffe2a8" opacity="0.79"/><circle cx="52.3" cy="202.4" r="0.55" fill="#ffd27a" opacity="0.46"/><circle cx="63.7" cy="199.8" r="0.94" fill="#ffd27a" opacity="0.75"/><circle cx="61.8" cy="207.4" r="0.61" fill="#ffd27a" opacity="0.76"/><circle cx="69.3" cy="189.0" r="0.84" fill="#ffc15c" opacity="0.59"/><circle cx="78.7" cy="181.2" r="0.65" fill="#ffe2a8" opacity="0.53"/><circle cx="84.6" cy="198.3" r="0.77" fill="#ffb74d" opacity="0.61"/><circle cx="98.6" cy="202.9" r="0.53" fill="#ffc15c" opacity="0.44"/><circle cx="108.2" cy="190.7" r="0.70" fill="#ffd27a" opacity="0.48"/><circle cx="108.6" cy="206.9" r="0.82" fill="#ffe2a8" opacity="0.64"/><circle cx="127.8" cy="178.7" r="0.66" fill="#ffd27a" opacity="0.81"/><circle cx="133.6" cy="194.0" r="0.86" fill="#ffe2a8" opacity="0.68"/><circle cx="147.9" cy="177.0" r="1.02" fill="#ffc15c" opacity="0.70"/><circle cx="136.4" cy="205.1" r="1.00" fill="#ffe2a8" opacity="0.88"/><circle cx="162.9" cy="190.4" r="0.51" fill="#ffe2a8" opacity="0.56"/><circle cx="166.6" cy="190.1" r="0.87" fill="#ffd27a" opacity="0.45"/><circle cx="162.9" cy="208.7" r="1.05" fill="#ffd27a" opacity="0.38"/><circle cx="162.9" cy="202.6" r="0.83" fill="#ffc15c" opacity="0.73"/><circle cx="207.2" cy="176.6" r="0.91" fill="#ffe2a8" opacity="0.41"/><circle cx="197.8" cy="158.9" r="0.75" fill="#ffe2a8" opacity="0.73"/><circle cx="209.9" cy="161.4" r="0.92" fill="#ffb74d" opacity="0.61"/><circle cx="202.4" cy="176.4" r="0.75" fill="#ffd27a" opacity="0.84"/><circle cx="230.5" cy="199.5" r="1.04" fill="#ffb74d" opacity="0.57"/><circle cx="229.8" cy="184.0" r="1.04" fill="#ffc15c" opacity="0.79"/><circle cx="252.2" cy="175.1" r="0.68" fill="#ffe2a8" opacity="0.73"/><circle cx="251.9" cy="174.1" r="0.85" fill="#ffd27a" opacity="0.52"/><circle cx="270.1" cy="202.7" r="0.68" fill="#ffd27a" opacity="0.82"/><circle cx="273.1" cy="175.1" r="0.88" fill="#ffb74d" opacity="0.54"/><circle cx="274.5" cy="205.8" r="1.01" fill="#ffd27a" opacity="0.48"/><circle cx="284.6" cy="203.9" r="0.92" fill="#ffe2a8" opacity="0.69"/><circle cx="282.4" cy="167.3" r="1.02" fill="#ffd27a" opacity="0.86"/><circle cx="296.8" cy="194.3" r="0.54" fill="#ffc15c" opacity="0.70"/><circle cx="311.3" cy="189.7" r="0.83" fill="#ffb74d" opacity="0.36"/><circle cx="299.4" cy="192.9" r="0.72" fill="#ffd27a" opacity="0.72"/><circle cx="322.2" cy="183.0" r="0.90" fill="#ffc15c" opacity="0.87"/><circle cx="322.9" cy="183.6" r="1.00" fill="#ffb74d" opacity="0.62"/><circle cx="322.8" cy="187.1" r="0.93" fill="#ffe2a8" opacity="0.50"/><circle cx="355.4" cy="181.7" r="0.72" fill="#ffb74d" opacity="0.78"/><circle cx="353.0" cy="201.7" r="0.99" fill="#ffc15c" opacity="0.48"/><circle cx="355.5" cy="188.0" r="0.71" fill="#ffe2a8" opacity="0.87"/><circle cx="353.6" cy="165.5" r="0.86" fill="#ffb74d" opacity="0.71"/><circle cx="370.7" cy="212.7" r="0.63" fill="#ffe2a8" opacity="0.76"/><circle cx="371.3" cy="193.4" r="0.99" fill="#ffd27a" opacity="0.38"/><circle cx="379.6" cy="214.8" r="0.86" fill="#ffc15c" opacity="0.86"/><circle cx="390.0" cy="189.0" r="0.56" fill="#ffe2a8" opacity="0.61"/><circle cx="392.3" cy="214.6" r="0.75" fill="#ffe2a8" opacity="0.78"/><circle cx="391.0" cy="189.9" r="0.56" fill="#ffd27a" opacity="0.41"/><circle cx="393.5" cy="200.0" r="0.76" fill="#ffc15c" opacity="0.51"/><circle cx="390.9" cy="200.3" r="0.59" fill="#ffe2a8" opacity="0.80"/><circle cx="412.2" cy="187.0" r="0.87" fill="#ffc15c" opacity="0.84"/><circle cx="493.2" cy="187.3" r="0.79" fill="#ffe2a8" opacity="0.43"/><circle cx="481.1" cy="187.5" r="0.65" fill="#ffc15c" opacity="0.68"/><circle cx="478.8" cy="176.2" r="0.87" fill="#ffd27a" opacity="0.54"/><circle cx="545.9" cy="178.8" r="1.10" fill="#ffd27a" opacity="0.74"/><circle cx="539.5" cy="204.4" r="0.74" fill="#ffd27a" opacity="0.43"/><circle cx="532.9" cy="177.9" r="0.98" fill="#ffc15c" opacity="0.37"/><circle cx="516.4" cy="188.0" r="0.79" fill="#ffb74d" opacity="0.55"/><circle cx="670.8" cy="204.0" r="0.80" fill="#ffe2a8" opacity="0.55"/><circle cx="589.2" cy="157.7" r="1.00" fill="#ffc15c" opacity="0.58"/><circle cx="680.1" cy="166.4" r="0.70" fill="#ffc15c" opacity="0.36"/><circle cx="565.6" cy="173.1" r="1.09" fill="#ffd27a" opacity="0.57"/><circle cx="698.0" cy="194.3" r="0.91" fill="#ffc15c" opacity="0.58"/><circle cx="726.0" cy="175.7" r="0.61" fill="#ffe2a8" opacity="0.38"/><circle cx="728.5" cy="197.0" r="0.64" fill="#ffc15c" opacity="0.76"/><circle cx="723.4" cy="193.5" r="0.71" fill="#ffe2a8" opacity="0.44"/><circle cx="729.3" cy="179.1" r="0.71" fill="#ffd27a" opacity="0.68"/><circle cx="721.8" cy="176.0" r="0.64" fill="#ffb74d" opacity="0.87"/><circle cx="743.1" cy="190.0" r="0.64" fill="#ffc15c" opacity="0.45"/><circle cx="741.9" cy="200.9" r="0.64" fill="#ffc15c" opacity="0.67"/><circle cx="745.2" cy="189.1" r="1.02" fill="#ffe2a8" opacity="0.36"/><circle cx="757.3" cy="212.4" r="1.07" fill="#ffd27a" opacity="0.55"/><circle cx="761.6" cy="190.7" r="0.87" fill="#ffe2a8" opacity="0.77"/><circle cx="764.1" cy="191.2" r="0.70" fill="#ffd27a" opacity="0.59"/><circle cx="762.8" cy="210.2" r="1.00" fill="#ffe2a8" opacity="0.41"/><circle cx="784.2" cy="186.3" r="0.73" fill="#ffb74d" opacity="0.76"/><circle cx="812.9" cy="164.5" r="0.96" fill="#ffc15c" opacity="0.78"/><circle cx="899.2" cy="188.8" r="1.06" fill="#ffb74d" opacity="0.37"/><circle cx="850.7" cy="147.5" r="0.77" fill="#ffb74d" opacity="0.88"/><circle cx="894.5" cy="201.3" r="0.94" fill="#ffb74d" opacity="0.42"/><circle cx="917.5" cy="181.1" r="0.92" fill="#ffd27a" opacity="0.36"/><circle cx="915.4" cy="198.2" r="0.73" fill="#ffb74d" opacity="0.45"/><circle cx="914.8" cy="183.7" r="0.52" fill="#ffd27a" opacity="0.79"/><circle cx="926.5" cy="180.0" r="0.63" fill="#ffe2a8" opacity="0.80"/><circle cx="955.1" cy="167.9" r="0.90" fill="#ffc15c" opacity="0.56"/><circle cx="957.1" cy="210.6" r="0.91" fill="#ffb74d" opacity="0.53"/><circle cx="967.6" cy="199.8" r="0.58" fill="#ffc15c" opacity="0.88"/><circle cx="972.5" cy="180.1" r="0.92" fill="#ffd27a" opacity="0.56"/><circle cx="965.3" cy="197.9" r="0.62" fill="#ffc15c" opacity="0.86"/><circle cx="970.0" cy="208.7" r="0.96" fill="#ffb74d" opacity="0.67"/><circle cx="978.1" cy="195.9" r="0.58" fill="#ffd27a" opacity="0.83"/><circle cx="996.7" cy="179.8" r="0.86" fill="#ffd27a" opacity="0.50"/><circle cx="997.4" cy="211.3" r="0.55" fill="#ffe2a8" opacity="0.67"/><circle cx="1010.3" cy="202.9" r="0.71" fill="#ffe2a8" opacity="0.59"/><circle cx="1013.9" cy="183.6" r="0.97" fill="#ffb74d" opacity="0.83"/><circle cx="1021.8" cy="180.8" r="0.59" fill="#ffc15c" opacity="0.58"/><circle cx="1022.5" cy="191.3" r="0.75" fill="#ffe2a8" opacity="0.58"/><circle cx="1042.8" cy="210.7" r="0.53" fill="#ffc15c" opacity="0.71"/><circle cx="1040.5" cy="198.0" r="1.06" fill="#ffc15c" opacity="0.81"/><circle cx="1039.6" cy="208.6" r="0.59" fill="#ffd27a" opacity="0.83"/><circle cx="1058.9" cy="198.7" r="0.60" fill="#ffc15c" opacity="0.88"/><circle cx="1063.2" cy="179.3" r="1.06" fill="#ffe2a8" opacity="0.39"/><circle cx="1106.8" cy="188.3" r="1.06" fill="#ffd27a" opacity="0.50"/><circle cx="1105.7" cy="127.6" r="0.97" fill="#ffb74d" opacity="0.40"/><circle cx="1101.2" cy="190.8" r="0.51" fill="#ffc15c" opacity="0.85"/><circle cx="1099.0" cy="141.6" r="1.02" fill="#ffd27a" opacity="0.87"/><circle cx="1325.4" cy="174.4" r="0.63" fill="#ffc15c" opacity="0.50"/><circle cx="1320.5" cy="169.1" r="0.70" fill="#ffe2a8" opacity="0.35"/><circle cx="1356.4" cy="188.0" r="0.66" fill="#ffb74d" opacity="0.83"/><circle cx="1354.1" cy="181.1" r="0.54" fill="#ffe2a8" opacity="0.88"/><circle cx="1381.3" cy="197.3" r="0.76" fill="#ffe2a8" opacity="0.62"/><circle cx="1376.8" cy="212.1" r="0.52" fill="#ffe2a8" opacity="0.51"/><circle cx="1393.5" cy="212.3" r="1.06" fill="#ffe2a8" opacity="0.40"/><circle cx="1392.3" cy="178.8" r="1.08" fill="#ffe2a8" opacity="0.41"/><circle cx="1387.1" cy="214.4" r="1.08" fill="#ffd27a" opacity="0.73"/><circle cx="1405.4" cy="171.7" r="0.55" fill="#ffc15c" opacity="0.46"/><circle cx="1416.3" cy="187.8" r="0.87" fill="#ffe2a8" opacity="0.46"/><circle cx="1414.6" cy="197.7" r="0.82" fill="#ffd27a" opacity="0.72"/><circle cx="1428.0" cy="172.9" r="0.50" fill="#ffc15c" opacity="0.38"/></g>
         <path d="M0,198 Q360,188 720,198 Q1080,208 1440,198 L1440,220 L0,220 Z" class="ist-sea"/>
+        <!-- Light shimmer reflecting off the Bosphorus surface -->
+        <g class="ist-reflections" fill="url(#hReflGrad)"><rect x="39.1" y="199.2" width="1.8" height="20.8" opacity="0.47"/><rect x="73.7" y="196.0" width="2.7" height="24.0" opacity="0.58"/><rect x="119.4" y="196.4" width="1.2" height="23.6" opacity="0.41"/><rect x="158.7" y="197.5" width="2.7" height="22.5" opacity="0.28"/><rect x="207.1" y="198.9" width="1.9" height="21.1" opacity="0.35"/><rect x="259.2" y="197.8" width="1.6" height="22.2" opacity="0.56"/><rect x="328.9" y="197.1" width="2.3" height="22.9" opacity="0.47"/><rect x="418.6" y="197.5" width="2.9" height="22.5" opacity="0.56"/><rect x="449.4" y="198.1" width="3.3" height="21.9" opacity="0.35"/><rect x="483.4" y="196.8" width="3.3" height="23.2" opacity="0.43"/><rect x="532.6" y="197.6" width="2.7" height="22.4" opacity="0.37"/><rect x="587.1" y="198.8" width="1.7" height="21.2" opacity="0.41"/><rect x="631.4" y="196.8" width="3.2" height="23.2" opacity="0.58"/><rect x="676.9" y="198.4" width="2.3" height="21.6" opacity="0.53"/><rect x="748.5" y="197.1" width="2.9" height="22.9" opacity="0.49"/><rect x="793.5" y="197.8" width="2.9" height="22.2" opacity="0.31"/><rect x="838.4" y="198.6" width="1.2" height="21.4" opacity="0.65"/><rect x="881.8" y="197.2" width="2.4" height="22.8" opacity="0.54"/><rect x="938.5" y="198.0" width="3.0" height="22.0" opacity="0.53"/><rect x="989.1" y="199.0" width="1.8" height="21.0" opacity="0.50"/><rect x="1038.5" y="196.6" width="2.9" height="23.4" opacity="0.55"/><rect x="1079.3" y="197.1" width="1.4" height="22.9" opacity="0.50"/><rect x="1109.0" y="197.3" width="2.0" height="22.7" opacity="0.59"/><rect x="1159.3" y="199.1" width="1.3" height="20.9" opacity="0.26"/><rect x="1208.8" y="198.2" width="2.4" height="21.8" opacity="0.54"/><rect x="1259.4" y="200.0" width="1.2" height="20.0" opacity="0.58"/><rect x="1309.2" y="198.3" width="1.6" height="21.7" opacity="0.57"/><rect x="1358.3" y="196.6" width="3.3" height="23.4" opacity="0.28"/><rect x="1409.0" y="198.8" width="2.1" height="21.2" opacity="0.45"/></g>
       </svg>
     </div>
     <div class="hero-content">
@@ -441,35 +469,7 @@
         </div>
         <div class="comp-grid comp-grid-5">
 
-            <div class="comp-card reveal" data-delay="0" data-comp="sorun">
-                <div class="cc-accent" style="--c:#00ff88"></div>
-                <div class="cc-body" onclick="openModal('sorun')">
-                    <div class="cc-icon">🔬</div>
-                    <h3 class="cc-title">"SORUN ! Çözen Nesiller" Proje Yarışması</h3>
-                    <p class="cc-desc">STEM disiplinleri ile gerçek yaşam problemlerine çözüm üret; prototip tasarla ve jüriye sun</p>
-                    <div class="cc-prize"><span>Kategori</span><strong>STEM Proje</strong></div>
-                </div>
-                <div class="cc-actions">
-                    <button class="cc-btn-pdf" onclick="openPdf('sorun')">📄 Şartnameyi Gör</button>
-                    <button class="cc-btn-reg" onclick="openRegLink('sorun')">📝 Başvur</button>
-                </div>
-            </div>
-
-            <div class="comp-card reveal" data-delay="100" data-comp="hackathon">
-                <div class="cc-accent" style="--c:#7b2fff"></div>
-                <div class="cc-body" onclick="openModal('hackathon')">
-                    <div class="cc-icon">💻</div>
-                    <h3 class="cc-title">Hackathon Yarışması</h3>
-                    <p class="cc-desc">"Serbest İnovasyon: Sınırsız Çözümler" temasıyla yapay zekâ destekli dijital çözümler geliştir</p>
-                    <div class="cc-prize"><span>Kategori</span><strong>Yazılım &amp; AI</strong></div>
-                </div>
-                <div class="cc-actions">
-                    <button class="cc-btn-pdf" onclick="openPdf('hackathon')">📄 Şartnameyi Gör</button>
-                    <button class="cc-btn-reg" onclick="openRegLink('hackathon')">📝 Başvur</button>
-                </div>
-            </div>
-
-            <div class="comp-card reveal" data-delay="200" data-comp="robofutbol">
+            <div class="comp-card reveal" data-delay="0" data-comp="robofutbol">
                 <div class="cc-accent" style="--c:#ff006e"></div>
                 <div class="cc-body" onclick="openModal('robofutbol')">
                     <div class="cc-icon">⚽</div>
@@ -483,7 +483,7 @@
                 </div>
             </div>
 
-            <div class="comp-card reveal" data-delay="300" data-comp="ermeydan">
+            <div class="comp-card reveal" data-delay="100" data-comp="ermeydan">
                 <div class="cc-accent" style="--c:#ff9500"></div>
                 <div class="cc-body" onclick="openModal('ermeydan')">
                     <div class="cc-icon">⚔️</div>
@@ -497,7 +497,7 @@
                 </div>
             </div>
 
-            <div class="comp-card reveal" data-delay="400" data-comp="cizgi">
+            <div class="comp-card reveal" data-delay="200" data-comp="cizgi">
                 <div class="cc-accent" style="--c:#00f5ff"></div>
                 <div class="cc-body" onclick="openModal('cizgi')">
                     <div class="cc-icon">🤖</div>
@@ -508,6 +508,34 @@
                 <div class="cc-actions">
                     <button class="cc-btn-pdf" onclick="openPdf('cizgi')">📄 Şartnameyi Gör</button>
                     <button class="cc-btn-reg" onclick="openRegLink('cizgi')">📝 Başvur</button>
+                </div>
+            </div>
+
+            <div class="comp-card reveal" data-delay="300" data-comp="sorun">
+                <div class="cc-accent" style="--c:#00ff88"></div>
+                <div class="cc-body" onclick="openModal('sorun')">
+                    <div class="cc-icon">🔬</div>
+                    <h3 class="cc-title">"SORUN ! Çözen Nesiller" Proje Yarışması</h3>
+                    <p class="cc-desc">STEM disiplinleri ile gerçek yaşam problemlerine çözüm üret; prototip tasarla ve jüriye sun</p>
+                    <div class="cc-prize"><span>Kategori</span><strong>STEM Proje</strong></div>
+                </div>
+                <div class="cc-actions">
+                    <button class="cc-btn-pdf" onclick="openPdf('sorun')">📄 Şartnameyi Gör</button>
+                    <button class="cc-btn-reg" onclick="openRegLink('sorun')">📝 Başvur</button>
+                </div>
+            </div>
+
+            <div class="comp-card reveal" data-delay="400" data-comp="hackathon">
+                <div class="cc-accent" style="--c:#7b2fff"></div>
+                <div class="cc-body" onclick="openModal('hackathon')">
+                    <div class="cc-icon">💻</div>
+                    <h3 class="cc-title">Hackathon Yarışması</h3>
+                    <p class="cc-desc">"Serbest İnovasyon: Sınırsız Çözümler" temasıyla yapay zekâ destekli dijital çözümler geliştir</p>
+                    <div class="cc-prize"><span>Kategori</span><strong>Yazılım &amp; AI</strong></div>
+                </div>
+                <div class="cc-actions">
+                    <button class="cc-btn-pdf" onclick="openPdf('hackathon')">📄 Şartnameyi Gör</button>
+                    <button class="cc-btn-reg" onclick="openRegLink('hackathon')">📝 Başvur</button>
                 </div>
             </div>
 
@@ -686,6 +714,11 @@
                             </label>
                         </div>
                     </div>
+                    <!-- Koşullu Alan: Öğrenci → Okuduğu Okul -->
+                    <div class="fg full role-field" id="fieldSchool" style="display:none">
+                        <label>Okuduğu Okul *</label>
+                        <input type="text" name="schoolName" id="schoolNameInput" placeholder="Okulunuzun adı">
+                    </div>
                     <!-- Koşullu Alan: Öğrenci → Sınıf -->
                     <div class="fg full role-field" id="fieldClass" style="display:none">
                         <label>Sınıf *</label>
@@ -697,11 +730,6 @@
                             <option value="11">11. Sınıf</option>
                             <option value="12">12. Sınıf</option>
                         </select>
-                    </div>
-                    <!-- Koşullu Alan: Öğrenci → Okuduğu Okul -->
-                    <div class="fg full role-field" id="fieldSchool" style="display:none">
-                        <label>Okuduğu Okul *</label>
-                        <input type="text" name="schoolName" id="schoolNameInput" placeholder="Okulunuzun adı">
                     </div>
                     <!-- Koşullu Alan: Öğretmen → Kurum -->
                     <div class="fg full role-field" id="fieldInstitution" style="display:none">
@@ -812,14 +840,20 @@
                 <a href="#">Bize Ulaşın</a>
             </div>
         </div>
-        <!-- Organizer Logo -->
+        <!-- Organizer / Destekleyen Kurum Logoları -->
         <div class="footer-logos">
-            <p class="fl-org-title">Organizatör</p>
+            <p class="fl-org-title">Organizatör &amp; Destekleyenler</p>
             <div class="fl-logo-row">
                 <div class="fl-logo-item">
-                    <object data="assets/dinegitim-logo.pdf" type="application/pdf" class="footer-logo-pdf" title="MEB Din Öğretimi Genel Müdürlüğü">
-                        <div class="footer-logo-fallback">MEB<br><small>Din Öğretimi<br>Genel Müdürlüğü</small></div>
-                    </object>
+                    <img src="assets/onder-logo.svg" class="footer-logo-img" alt="ÖNDER İmam Hatipliler Derneği logosu" title="ÖNDER İmam Hatipliler Derneği">
+                    <div class="fl-logo-text">
+                        <span class="fl-logo-name">ÖNDER</span>
+                        <span class="fl-logo-sub">İmam Hatipliler Derneği</span>
+                    </div>
+                </div>
+                <div class="fl-logo-sep"></div>
+                <div class="fl-logo-item">
+                    <img src="assets/dinegitim-horizontal-lockup.svg" class="footer-logo-img footer-logo-img--lockup" alt="MEB Din Öğretimi Genel Müdürlüğü logosu" title="MEB Din Öğretimi Genel Müdürlüğü">
                     <div class="fl-logo-text">
                         <span class="fl-logo-name">Din Öğretimi</span>
                         <span class="fl-logo-sub">Genel Müdürlüğü</span>

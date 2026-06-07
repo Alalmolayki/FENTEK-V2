@@ -1601,7 +1601,7 @@ section { padding: 6rem 2rem; }
 
 /* Updated footer inner grid for 3 columns (brand + links + logos) */
 .footer-inner {
-  grid-template-columns: 240px 1fr 220px !important;
+  grid-template-columns: 240px 1fr 330px !important;
   gap: 3rem !important;
 }
 .footer-logos { }
@@ -1615,41 +1615,30 @@ section { padding: 6rem 2rem; }
 }
 .fl-logo-row {
   display: flex;
-  flex-direction: row;
-  gap: 1.4rem;
-  align-items: center;
+  flex-direction: column;
+  gap: 1.1rem;
+  align-items: flex-start;
 }
 .fl-logo-item {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.9rem;
+  width: 100%;
 }
-.footer-logo-pdf {
-  width: 140px;
-  height: 60px;
-  border-radius: 6px;
+.footer-logo-img {
+  width: 280px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
   border: 1px solid var(--border);
-  background: rgba(255,255,255,0.03);
-  overflow: hidden;
+  background: rgba(255,255,255,0.06);
+  padding: 16px;
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
-.footer-logo-fallback {
-  width: 140px; height: 60px;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: rgba(255,255,255,0.04);
-  text-align: center;
-  font-family: var(--font-d);
-  font-size: 0.75rem;
-  color: var(--c1);
-  line-height: 1.3;
-}
-.footer-logo-fallback small {
-  font-family: var(--font-b);
-  font-size: 0.65rem;
-  color: var(--dim);
+.footer-logo-img--lockup {
+  padding: 18px 16px;
 }
 .fl-logo-sep {
   width: 80%;
@@ -1772,10 +1761,9 @@ section { padding: 6rem 2rem; }
 [data-theme="light"] .footer-logo { color: #0a0a2e; }
 [data-theme="light"] .footer-bottom { background: #cdd8f8; }
 [data-theme="light"] .footer-bottom p { color: rgba(10,10,50,0.6); }
-[data-theme="light"] .footer-logo-fallback { background: rgba(255,255,255,0.4); color: #0040a0; }
+[data-theme="light"] .footer-logo-img { background: rgba(255,255,255,0.55); }
 
-/* Theme toggle icon in light mode */
-[data-theme="light"] #ttIcon::after { content: '🌙'; }
+/* Theme toggle icon in light mode (icon glyph itself is set by JS in app.js — do not duplicate via ::after) */
 [data-theme="light"] .theme-toggle { border-color: rgba(80,120,200,0.3); background: rgba(80,120,200,0.08); }
 
 /* ══════════════════════════════════
@@ -1783,9 +1771,7 @@ section { padding: 6rem 2rem; }
 ══════════════════════════════════ */
 @media (max-width: 1100px) {
   .footer-inner { grid-template-columns: 1fr 1fr !important; }
-  .footer-logos { grid-column: 1/-1; }
-  .fl-logo-row { flex-direction: row; justify-content: center; align-items: flex-start; flex-wrap: wrap; }
-  .fl-logo-sep { width: 1px; height: 60px; }
+  .footer-logos { grid-column: 1/-1; max-width: 360px; }
 }
 @media (max-width: 768px) {
   .cc-actions { flex-direction: column; }

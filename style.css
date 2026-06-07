@@ -107,10 +107,11 @@ input, textarea, select, button { font-family: var(--font-b); }
 }
 .intro-logo {
   font-family: var(--font-d);
-  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-size: clamp(2.6rem, 10vw, 8rem);
   font-weight: 900;
   letter-spacing: 0.05em;
   line-height: 1;
+  max-width: 100%;
 }
 .i-fen {
   color: #fff;
@@ -1088,11 +1089,12 @@ section { padding: 6rem 2rem; }
 }
 .reg-container {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 320px minmax(0, 1fr);
   gap: 4rem;
   align-items: start;
+  min-width: 0;
 }
-.reg-info { display: flex; flex-direction: column; gap: 1.2rem; }
+.reg-info { display: flex; flex-direction: column; gap: 1.2rem; min-width: 0; }
 .ri-item {
   display: flex;
   align-items: flex-start;
@@ -1134,9 +1136,9 @@ section { padding: 6rem 2rem; }
   padding: 2.5rem;
   backdrop-filter: blur(12px);
 }
-#regForm { display: flex; flex-direction: column; gap: 1.2rem; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
-.fg { display: flex; flex-direction: column; gap: 0.4rem; }
+#regForm { display: flex; flex-direction: column; gap: 1.2rem; min-width: 0; }
+.form-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.2rem; min-width: 0; }
+.fg { display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
 .fg.full { grid-column: 1/-1; }
 .fg label {
   font-size: 0.8rem;
@@ -1145,6 +1147,9 @@ section { padding: 6rem 2rem; }
   letter-spacing: 0.05em;
 }
 .fg input, .fg select, .fg textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   background: rgba(0,0,0,0.3);
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -1322,8 +1327,8 @@ section { padding: 6rem 2rem; }
   .stats-wrap { grid-template-columns: repeat(2, 1fr); }
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
   .brain-scene { width: 300px; height: 300px; }
-  .reg-container { grid-template-columns: 1fr; gap: 3rem; }
-  .reg-info { display: grid; grid-template-columns: repeat(2, 1fr); }
+  .reg-container { grid-template-columns: minmax(0, 1fr); gap: 3rem; }
+  .reg-info { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .reg-img-box { grid-column: 1/-1; }
   .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; }
   .footer-links { grid-template-columns: repeat(3, 1fr); }
@@ -1332,8 +1337,8 @@ section { padding: 6rem 2rem; }
   section { padding: 4rem 1.5rem; }
   .comp-grid { grid-template-columns: 1fr 1fr; }
   .stats-wrap { grid-template-columns: 1fr 1fr; }
-  .form-row { grid-template-columns: 1fr; }
-  .reg-info { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: minmax(0, 1fr); }
+  .reg-info { grid-template-columns: minmax(0, 1fr); }
   .cd-timer { gap: 0.8rem; }
   .cd-num { font-size: 2.5rem; min-width: 70px; padding: 0.6rem 0.8rem; }
   .cd-sep { font-size: 2rem; }

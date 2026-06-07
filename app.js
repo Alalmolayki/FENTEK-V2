@@ -12,12 +12,18 @@ const DEFAULT_COMP_SETTINGS = {
   ermeydan: { name: 'Takımlar Er Meydanı', pdfUrl: 'pdfs/2026 Takımlar Er Meydanı Yarışma Şartnamesi.pdf', regUrl: '#register' },
   cizgi:    { name: 'Temel Seviye Çizgi İzleyen Robot', pdfUrl: 'pdfs/2026 Temel Seviye Çizgi izleyen Yarışma Şartnamesi.pdf', regUrl: '#register' }
 };
-// Merge with admin overrides
-const savedCompSettings = JSON.parse(localStorage.getItem('fentech_comp_settings') || '{}');
+// Merge with admin overrides (admin overrides artık Firestore'dan geliyor;
+// refreshCompSettingsFromDB() bu objeyi yerinde günceller — referans sabit kalır)
 const compSettings = {};
 Object.keys(DEFAULT_COMP_SETTINGS).forEach(k => {
-  compSettings[k] = Object.assign({}, DEFAULT_COMP_SETTINGS[k], savedCompSettings[k] || {});
+  compSettings[k] = Object.assign({}, DEFAULT_COMP_SETTINGS[k]);
 });
+function refreshCompSettingsFromDB() {
+  const saved = (window.FentechDB && window.FentechDB.cache.compSettings) || {};
+  Object.keys(DEFAULT_COMP_SETTINGS).forEach(k => {
+    compSettings[k] = Object.assign({}, DEFAULT_COMP_SETTINGS[k], saved[k] || {});
+  });
+}
 
 /* ── Competition Data — gerçek PDF şartnamelerinden ── */
 const competitions = {
@@ -736,7 +742,7 @@ function onRoleChange(radio) {
 /* ══════════════════════════════════
    FORM SUBMISSION
 ══════════════════════════════════ */
-function submitForm(e) {
+async function submitForm(e) {
   e.preventDefault();
   const form    = e.target;
   const errMsg  = document.getElementById('regErrMsg');
@@ -784,36 +790,49 @@ function submitForm(e) {
   const instVal   = roleVal === 'teacher' ? form.institution.value.trim() : '';
   const comp      = form.competition.value;
 
-  // Duplicate check (same Ad + Soyad)
-  const registrations = JSON.parse(localStorage.getItem('fentech_registrations') || '[]');
-  const fullName = `${firstName} ${lastName}`.toLowerCase();
-  const duplicate = registrations.find(r => `${r.firstName} ${r.lastName}`.toLowerCase() === fullName);
-  if (duplicate) {
-    errMsg.textContent = `"${firstName} ${lastName}" adına daha önce kayıt yapılmıştır.`;
+  const submitBtn = form.querySelector('[type="submit"]');
+  if (submitBtn) submitBtn.disabled = true;
+
+  try {
+    if (!window.FentechDB) throw new Error('Veritabanı bağlantısı bulunamadı.');
+    await window.FentechDB.ready;
+
+    // Duplicate check (same Ad + Soyad) — canlı veritabanı önbelleğine göre
+    const registrations = window.FentechDB.cache.registrations || [];
+    const fullName = `${firstName} ${lastName}`.toLowerCase();
+    const duplicate = registrations.find(r => `${r.firstName} ${r.lastName}`.toLowerCase() === fullName);
+    if (duplicate) {
+      errMsg.textContent = `"${firstName} ${lastName}" adına daha önce kayıt yapılmıştır.`;
+      errMsg.style.display = 'block';
+      if (submitBtn) submitBtn.disabled = false;
+      return;
+    }
+
+    // Save registration to Firestore — tüm cihazlarda anlık olarak görünür olur
+    const newReg = {
+      id: Date.now(),
+      timestamp: new Date().toISOString(),
+      firstName, lastName, email, phone, province,
+      role: roleVal, class: classVal, schoolName: schoolVal, institution: instVal, competition: comp
+    };
+    await window.FentechDB.addRegistration(newReg);
+
+    form.style.opacity = '0.5';
+    form.style.pointerEvents = 'none';
+
+    setTimeout(() => {
+      form.style.display = 'none';
+      document.getElementById('regSuccessMsg').textContent =
+        `Merhaba ${firstName}! FenTECH 2026'ya kaydınız tamamlandı.`;
+      document.getElementById('regSuccess').style.display = 'block';
+      document.getElementById('regSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 700);
+  } catch (err) {
+    console.error('Kayıt gönderilemedi:', err);
+    errMsg.textContent = 'Kaydınız gönderilirken bir hata oluştu. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.';
     errMsg.style.display = 'block';
-    return;
+    if (submitBtn) submitBtn.disabled = false;
   }
-
-  // Save registration
-  const newReg = {
-    id: Date.now(),
-    timestamp: new Date().toISOString(),
-    firstName, lastName, email, phone, province,
-    role: roleVal, class: classVal, schoolName: schoolVal, institution: instVal, competition: comp
-  };
-  registrations.push(newReg);
-  localStorage.setItem('fentech_registrations', JSON.stringify(registrations));
-
-  form.style.opacity = '0.5';
-  form.style.pointerEvents = 'none';
-
-  setTimeout(() => {
-    form.style.display = 'none';
-    document.getElementById('regSuccessMsg').textContent =
-      `Merhaba ${firstName}! FenTECH 2026'ya kaydınız tamamlandı.`;
-    document.getElementById('regSuccess').style.display = 'block';
-    document.getElementById('regSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 700);
 }
 
 /* ══════════════════════════════════
@@ -868,45 +887,29 @@ function checkAdminHash() {
 
 window.addEventListener('hashchange', checkAdminHash);
 
-/* ── Live update from admin ── */
-window.addEventListener('fentech-admin-update', () => {
+/* ── Live update from Firestore (admin panel changes sync to all devices) ── */
+function refreshFromDB() {
+  if (!window.FentechDB) return;
+
   // Refresh comp settings
-  const saved = JSON.parse(localStorage.getItem('fentech_comp_settings') || '{}');
-  Object.keys(DEFAULT_COMP_SETTINGS).forEach(k => {
-    compSettings[k] = Object.assign({}, DEFAULT_COMP_SETTINGS[k], saved[k] || {});
-  });
+  refreshCompSettingsFromDB();
   // Reflect updated competition names on the visible cards & registration dropdown
   applyCompSettingsToCards();
+
   // Refresh schedule
-  const savedSched = JSON.parse(localStorage.getItem('fentech_schedule') || 'null');
+  const savedSched = window.FentechDB.cache.schedule;
   if (savedSched && Array.isArray(savedSched[0])) scheduleData[0] = savedSched[0];
   if (savedSched && Array.isArray(savedSched[1])) scheduleData[1] = savedSched[1];
   // Re-render visible schedule day
   const activeTab = document.querySelector('.stab.active');
   const dayIdx = activeTab ? Array.from(document.querySelectorAll('.stab')).indexOf(activeTab) : 0;
   renderSchedule(dayIdx);
+
   // Refresh stats counters
-  const savedStats = JSON.parse(localStorage.getItem('fentech_stats') || '{}');
+  const savedStats = window.FentechDB.cache.stats || {};
   if (savedStats.participantTarget) {
     const sc = document.querySelector('.stat-card[data-target="5000"]') ||
                document.querySelector('.stat-card[data-target]');
-    if (sc) sc.setAttribute('data-target', savedStats.participantTarget);
-  }
-});
-
-/* ══════════════════════════════════
-   INIT
-══════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', () => {
-  initTheme();
-  // Load admin-saved schedule overrides
-  const savedSched = JSON.parse(localStorage.getItem('fentech_schedule') || 'null');
-  if (savedSched && Array.isArray(savedSched[0])) { scheduleData[0] = savedSched[0]; }
-  if (savedSched && Array.isArray(savedSched[1])) { scheduleData[1] = savedSched[1]; }
-  // Load admin-saved stats overrides
-  const savedStats = JSON.parse(localStorage.getItem('fentech_stats') || '{}');
-  if (savedStats.participantTarget) {
-    const sc = document.querySelector('.stat-card[data-target="5000"]');
     if (sc) sc.setAttribute('data-target', savedStats.participantTarget);
   }
   if (savedStats.prizePool) {
@@ -916,6 +919,25 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+}
+
+if (window.FentechDB) {
+  // Her Firestore güncellemesinde (admin panelinden veya başka bir cihazdan) yeniden çiz
+  window.FentechDB.onUpdate(() => refreshFromDB());
+}
+
+/* ══════════════════════════════════
+   INIT
+══════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+
+  // Firestore verisi yüklendiğinde (admin tarafından kaydedilmiş program/istatistik/
+  // yarışma ayarları) sayfayı tüm cihazlarda anında güncelle
+  if (window.FentechDB) {
+    window.FentechDB.ready.then(() => refreshFromDB());
+  }
+
   initIntro();
   initCursor();
   initNavbar();

@@ -82,9 +82,14 @@ const DEFAULT_SCHEDULE = [
 /* ══════════════════════════════════
    HELPERS
 ══════════════════════════════════ */
-function getRegs()     { return JSON.parse(localStorage.getItem('fentech_registrations') || '[]'); }
+// Bu yardımcı fonksiyonlar artık localStorage yerine Firestore'un canlı
+// önbelleğinden (window.FentechDB.cache) okuyor — böylece admin panelindeki
+// her görünüm, hangi cihazdan değiştirilmiş olursa olsun güncel veriyi gösterir.
+function getRegs() {
+  return (window.FentechDB && window.FentechDB.cache.registrations) || [];
+}
 function getCompSets() {
-  const saved = JSON.parse(localStorage.getItem('fentech_comp_settings') || '{}');
+  const saved = (window.FentechDB && window.FentechDB.cache.compSettings) || {};
   const merged = {};
   Object.keys(ADMIN_COMP_DEFAULTS).forEach(k => {
     merged[k] = Object.assign({}, ADMIN_COMP_DEFAULTS[k], saved[k] || {});
@@ -92,11 +97,13 @@ function getCompSets() {
   return merged;
 }
 function getSched() {
-  const saved = JSON.parse(localStorage.getItem('fentech_schedule') || 'null');
+  const saved = window.FentechDB && window.FentechDB.cache.schedule;
   if (saved && Array.isArray(saved[0]) && Array.isArray(saved[1])) return saved;
   return JSON.parse(JSON.stringify(DEFAULT_SCHEDULE)); // deep clone
 }
-function getStats() { return JSON.parse(localStorage.getItem('fentech_stats') || '{}'); }
+function getStats() {
+  return (window.FentechDB && window.FentechDB.cache.stats) || {};
+}
 
 const COMP_LABELS = {
   sorun:'SORUN! Proje', hackathon:'Hackathon', robofutbol:'RoboFutbol',
@@ -107,10 +114,28 @@ const COMP_LABELS = {
    INIT PANEL
 ══════════════════════════════════ */
 function initPanel() {
+  // Programı en güncel Firestore verisiyle yeniden yükle (panel ilk açıldığında
+  // henüz veri gelmemiş olabilir; modül yüklenirken alınan varsayılan değer
+  // burada güncel önbellekle değiştirilir)
+  schedData = getSched();
+  currentSchedDay = 0;
   renderDashboard();
   renderCompEditors();
   renderScheduleEditor();
   renderParticipants();
+}
+
+// Firestore'da bir değişiklik olduğunda (bu cihazdan ya da başka bir cihazdan)
+// admin panelindeki salt-okunur görünümleri güncel veriyle yeniden çiz
+if (window.FentechDB) {
+  window.FentechDB.onUpdate(() => {
+    const adminWrap = document.getElementById('adminWrapper');
+    const panel = document.getElementById('adminPanel');
+    if (!adminWrap || adminWrap.style.display === 'none') return;
+    if (!panel || panel.style.display === 'none') return;
+    renderDashboard();
+    renderParticipants();
+  });
 }
 
 /* ══════════════════════════════════
@@ -166,16 +191,20 @@ function renderDashboard() {
     </table>`;
 }
 
-function saveStats() {
+async function saveStats() {
   const p = parseInt(document.getElementById('statParticipant').value) || 0;
   const r = parseInt(document.getElementById('statPrize').value) || 0;
   const obj = {};
   if (p) obj.participantTarget = p;
   if (r) obj.prizePool = r;
-  localStorage.setItem('fentech_stats', JSON.stringify(obj));
-  flashMsg('statsSaveMsg');
-  renderDashboard();
-  window.dispatchEvent(new CustomEvent('fentech-admin-update'));
+  try {
+    await window.FentechDB.saveStats(obj);
+    flashMsg('statsSaveMsg');
+    renderDashboard();
+  } catch (err) {
+    console.error('İstatistikler kaydedilemedi:', err);
+    alert('İstatistikler kaydedilirken bir hata oluştu. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.');
+  }
 }
 
 /* ══════════════════════════════════
@@ -240,19 +269,24 @@ function uploadCompPdf(key, input) {
   if (label) label.textContent = `✅ ${file.name}`;
 }
 
-function saveCompSettings() {
-  const current = JSON.parse(localStorage.getItem('fentech_comp_settings') || '{}');
+async function saveCompSettings() {
+  const current = (window.FentechDB && window.FentechDB.cache.compSettings) || {};
+  const updated = {};
   Object.keys(ADMIN_COMP_DEFAULTS).forEach(key => {
-    current[key] = current[key] || {};
-    current[key].name   = document.getElementById(`ce_name_${key}`)?.value?.trim()   || ADMIN_COMP_DEFAULTS[key].name;
-    current[key].regUrl = document.getElementById(`ce_regurl_${key}`)?.value?.trim() || '';
+    updated[key] = Object.assign({}, current[key] || {});
+    updated[key].name   = document.getElementById(`ce_name_${key}`)?.value?.trim()   || ADMIN_COMP_DEFAULTS[key].name;
+    updated[key].regUrl = document.getElementById(`ce_regurl_${key}`)?.value?.trim() || '';
     // pdfUrl stays as default path; blob URLs are in window._adminPdfUrls (session-only)
-    current[key].pdfUrl = ADMIN_COMP_DEFAULTS[key].pdfUrl;
+    updated[key].pdfUrl = ADMIN_COMP_DEFAULTS[key].pdfUrl;
   });
-  localStorage.setItem('fentech_comp_settings', JSON.stringify(current));
-  flashMsg('compSaveMsg');
-  // Notify main page to refresh
-  window.dispatchEvent(new CustomEvent('fentech-admin-update'));
+  try {
+    await window.FentechDB.saveCompSettings(updated);
+    flashMsg('compSaveMsg');
+    // Firestore'daki gerçek zamanlı dinleyici tüm cihazlardaki sayfaları otomatik günceller
+  } catch (err) {
+    console.error('Yarışma ayarları kaydedilemedi:', err);
+    alert('Yarışma ayarları kaydedilirken bir hata oluştu. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.');
+  }
 }
 
 /* ══════════════════════════════════
@@ -326,7 +360,7 @@ function addSchedItem() {
   wrap.lastElementChild?.scrollIntoView({ behavior:'smooth', block:'nearest' });
 }
 
-function saveSchedule() {
+async function saveSchedule() {
   // Collect latest values from DOM inputs before saving
   const rows = document.querySelectorAll('.se-row');
   rows.forEach((row, i) => {
@@ -348,9 +382,14 @@ function saveSchedule() {
     return item;
   }));
 
-  localStorage.setItem('fentech_schedule', JSON.stringify(toSave));
-  flashMsg('schedSaveMsg');
-  window.dispatchEvent(new CustomEvent('fentech-admin-update'));
+  try {
+    await window.FentechDB.saveSchedule(toSave);
+    flashMsg('schedSaveMsg');
+    // Firestore'daki gerçek zamanlı dinleyici tüm cihazlardaki sayfaları otomatik günceller
+  } catch (err) {
+    console.error('Program kaydedilemedi:', err);
+    alert('Program kaydedilirken bir hata oluştu. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.');
+  }
 }
 
 /* ══════════════════════════════════
@@ -413,18 +452,28 @@ function filterParticipants() {
   renderParticipants(q);
 }
 
-function deleteReg(id) {
+async function deleteReg(id) {
   if (!confirm('Bu kaydı silmek istediğinizden emin misiniz?')) return;
-  const regs = getRegs().filter(r => r.id !== id);
-  localStorage.setItem('fentech_registrations', JSON.stringify(regs));
-  renderParticipants(document.getElementById('searchPart')?.value);
+  try {
+    await window.FentechDB.deleteRegistration(id);
+    renderParticipants(document.getElementById('searchPart')?.value);
+    renderDashboard();
+  } catch (err) {
+    console.error('Kayıt silinemedi:', err);
+    alert('Kayıt silinirken bir hata oluştu. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.');
+  }
 }
 
-function clearAllRegs() {
+async function clearAllRegs() {
   if (!confirm('TÜM kayıtlar silinecek. Onaylıyor musunuz?')) return;
-  localStorage.removeItem('fentech_registrations');
-  renderParticipants();
-  renderDashboard();
+  try {
+    await window.FentechDB.clearAllRegistrations();
+    renderParticipants();
+    renderDashboard();
+  } catch (err) {
+    console.error('Kayıtlar silinemedi:', err);
+    alert('Kayıtlar silinirken bir hata oluştu. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.');
+  }
 }
 
 function exportExcel() {

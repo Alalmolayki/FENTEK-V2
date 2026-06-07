@@ -764,12 +764,23 @@ async function submitForm(e) {
     }
   });
 
+  // Şartname onay kutusu işaretli mi? (özel uyarı mesajı)
+  const consentBox = form.querySelector('#consentBox');
+  if (consentBox && !consentBox.checked) {
+    valid = false;
+    consentBox.closest('.chk-label')?.classList.add('error');
+    errMsg.textContent = 'Kaydınızı tamamlamak için "Katılım şartnamelerini okudum ve kabul ediyorum" kutusunu işaretlemeniz gerekiyor.';
+    errMsg.style.display = 'block';
+  }
+
   // Role must be selected
   const role = form.querySelector('input[name="role"]:checked');
   if (!role) {
     valid = false;
-    errMsg.textContent = 'Lütfen öğrenci veya öğretmen rolünüzü seçin.';
-    errMsg.style.display = 'block';
+    if (!errMsg.textContent || errMsg.style.display === 'none') {
+      errMsg.textContent = 'Lütfen öğrenci veya öğretmen rolünüzü seçin.';
+      errMsg.style.display = 'block';
+    }
   }
 
   if (!valid) {

@@ -27,7 +27,7 @@
 
 /* ── Reset ── */
 *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; font-size:16px; }
+html { scroll-behavior:smooth; font-size:16px; overflow-x: hidden; max-width: 100%; }
 body {
   font-family: var(--font-b);
   background: var(--bg);
@@ -328,6 +328,19 @@ input, textarea, select, button { font-family: var(--font-b); }
   text-align: center;
   padding: 0 1.5rem;
   max-width: 900px;
+}
+.hero-dogm-logo {
+  display: block;
+  width: 190px;
+  max-width: 60vw;
+  height: auto;
+  margin: 0 auto 1.6rem;
+  filter: brightness(0) invert(1);
+  opacity: 0.88;
+}
+[data-theme="light"] .hero-dogm-logo {
+  filter: brightness(0);
+  opacity: 0.78;
 }
 .hero-badge {
   display: inline-flex;
@@ -1170,6 +1183,8 @@ section { padding: 6rem 2rem; }
   font-size: 0.85rem; color: var(--dim); line-height: 1.5;
 }
 .chk-label input { width: 16px; height: 16px; flex-shrink: 0; accent-color: var(--c1); margin-top: 2px; }
+.chk-label.error span { color: var(--c2); }
+.chk-label.error input { outline: 2px solid var(--c2); outline-offset: 2px; border-radius: 3px; }
 .btn-submit {
   width: 100%;
   padding: 1.1rem;
@@ -1388,6 +1403,12 @@ section { padding: 6rem 2rem; }
   overflow: hidden;
 }
 .istanbul-svg { width: 100%; height: 100%; display: block; }
+.istanbul-img {
+  object-fit: cover;
+  object-position: center bottom;
+}
+/* Açık temada arka plan aydınlık olduğu için siluet ters çevrilip koyu renkte gösterilir */
+[data-theme="light"] .istanbul-img { filter: invert(1); opacity: 0.8; }
 .ist-fill { fill: rgba(2, 4, 20, 0.92); }
 .ist-stroke { stroke: rgba(2, 4, 20, 0.92); stroke-width: 2; fill: none; }
 .ist-sea { fill: rgba(0, 18, 51, 0.6); }
@@ -1620,40 +1641,44 @@ section { padding: 6rem 2rem; }
 }
 .fl-logo-row {
   display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
-  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  align-items: center;
 }
 .fl-logo-item {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  gap: 0.9rem;
-  width: 100%;
+  text-align: center;
+  gap: 0.6rem;
+  width: auto;
 }
 .footer-logo-img {
-  width: 280px;
+  width: 128px;
   height: auto;
   object-fit: contain;
   border-radius: 8px;
   border: 1px solid var(--border);
   background: rgba(255,255,255,0.06);
-  padding: 16px;
+  padding: 10px;
   box-sizing: border-box;
   flex-shrink: 0;
 }
 .footer-logo-img--lockup {
-  padding: 18px 16px;
+  padding: 12px 10px;
 }
 .fl-logo-sep {
-  width: 80%;
-  height: 1px;
+  width: 1px;
+  height: 88px;
   background: var(--border);
-  margin: 0.2rem 0;
+  margin: 0;
+  align-self: center;
 }
 .fl-logo-text {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2px;
 }
 .fl-logo-name {

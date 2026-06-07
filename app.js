@@ -614,6 +614,20 @@ function switchDay(dayIdx, btn) {
 /* ══════════════════════════════════
    MODAL
 ══════════════════════════════════ */
+/* Sync visible competition card titles with admin-edited names */
+function applyCompSettingsToCards() {
+  Object.keys(compSettings).forEach(key => {
+    const card = document.querySelector(`.comp-card[data-comp="${key}"]`);
+    if (!card) return;
+    const titleEl = card.querySelector('.cc-title');
+    const name = compSettings[key]?.name;
+    if (titleEl && name) titleEl.textContent = name;
+    // Keep the registration form's category dropdown in sync too
+    const opt = document.querySelector(`#regForm select[name="competition"] option[value="${key}"]`);
+    if (opt && name) opt.textContent = name;
+  });
+}
+
 function openModal(key) {
   const data = competitions[key];
   const cfg  = compSettings[key];
@@ -686,20 +700,26 @@ function toggleFaq(btn) {
 ══════════════════════════════════ */
 function onRoleChange(radio) {
   const fieldClass       = document.getElementById('fieldClass');
+  const fieldSchool      = document.getElementById('fieldSchool');
   const fieldInstitution = document.getElementById('fieldInstitution');
   const classSelect      = document.getElementById('classSelect');
+  const schoolInput      = document.getElementById('schoolNameInput');
   const instInput        = document.getElementById('institutionInput');
 
   if (radio.value === 'student') {
     fieldClass.style.display       = '';
+    fieldSchool.style.display      = '';
     fieldInstitution.style.display = 'none';
     classSelect.setAttribute('required', '');
+    schoolInput.setAttribute('required', '');
     instInput.removeAttribute('required');
   } else {
     fieldClass.style.display       = 'none';
+    fieldSchool.style.display      = 'none';
     fieldInstitution.style.display = '';
     instInput.setAttribute('required', '');
     classSelect.removeAttribute('required');
+    schoolInput.removeAttribute('required');
   }
 }
 
@@ -747,8 +767,10 @@ function submitForm(e) {
   const lastName  = form.lastName.value.trim();
   const email     = form.email.value.trim();
   const phone     = form.phone.value.trim();
+  const province  = form.province.value;
   const roleVal   = role.value;
   const classVal  = roleVal === 'student' ? form.class.value : '';
+  const schoolVal = roleVal === 'student' ? form.schoolName.value.trim() : '';
   const instVal   = roleVal === 'teacher' ? form.institution.value.trim() : '';
   const comp      = form.competition.value;
 
@@ -766,8 +788,8 @@ function submitForm(e) {
   const newReg = {
     id: Date.now(),
     timestamp: new Date().toISOString(),
-    firstName, lastName, email, phone,
-    role: roleVal, class: classVal, institution: instVal, competition: comp
+    firstName, lastName, email, phone, province,
+    role: roleVal, class: classVal, schoolName: schoolVal, institution: instVal, competition: comp
   };
   registrations.push(newReg);
   localStorage.setItem('fentech_registrations', JSON.stringify(registrations));
@@ -843,6 +865,8 @@ window.addEventListener('fentech-admin-update', () => {
   Object.keys(DEFAULT_COMP_SETTINGS).forEach(k => {
     compSettings[k] = Object.assign({}, DEFAULT_COMP_SETTINGS[k], saved[k] || {});
   });
+  // Reflect updated competition names on the visible cards & registration dropdown
+  applyCompSettingsToCards();
   // Refresh schedule
   const savedSched = JSON.parse(localStorage.getItem('fentech_schedule') || 'null');
   if (savedSched && Array.isArray(savedSched[0])) scheduleData[0] = savedSched[0];
@@ -890,6 +914,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initStats();
   initCountdown();
   renderSchedule(0);
+  applyCompSettingsToCards();
 
   /* Smooth-link active state */
   const navLinks = document.querySelectorAll('.nav-lnk');

@@ -381,8 +381,9 @@ function renderParticipants(query) {
         <th>Ad Soyad</th>
         <th>E-posta</th>
         <th>Telefon</th>
+        <th>İl</th>
         <th>Rol</th>
-        <th>Sınıf / Kurum</th>
+        <th>Sınıf / Okul / Kurum</th>
         <th>Yarışma</th>
         <th>Tarih</th>
         <th></th>
@@ -394,8 +395,11 @@ function renderParticipants(query) {
             <td><strong>${esc(r.firstName)} ${esc(r.lastName)}</strong></td>
             <td>${esc(r.email)}</td>
             <td>${esc(r.phone)}</td>
+            <td>${esc(r.province || '-')}</td>
             <td><span class="part-badge ${r.role}">${r.role === 'student' ? '🎓 Öğrenci' : '👨‍🏫 Öğretmen'}</span></td>
-            <td>${r.role === 'student' ? esc(r.class || '-') : esc(r.institution || '-')}</td>
+            <td>${r.role === 'student'
+                  ? `${esc(classLabel(r.class))}${r.schoolName ? ' — ' + esc(r.schoolName) : ''}`
+                  : esc(r.institution || '-')}</td>
             <td>${COMP_LABELS[r.competition] || esc(r.competition)}</td>
             <td>${new Date(r.timestamp).toLocaleDateString('tr-TR')}</td>
             <td><button class="a-btn-sm" onclick="deleteReg(${r.id})">Sil</button></td>
@@ -433,8 +437,11 @@ function exportExcel() {
     'Soyad':           r.lastName,
     'E-posta':         r.email,
     'Telefon':         r.phone,
+    'İl':              r.province || '',
     'Rol':             r.role === 'student' ? 'Öğrenci' : 'Öğretmen',
-    'Sınıf / Kurum':   r.role === 'student' ? (r.class || '') : (r.institution || ''),
+    'Sınıf':           r.role === 'student' ? classLabel(r.class) : '',
+    'Okuduğu Okul':    r.role === 'student' ? (r.schoolName || '') : '',
+    'Kurum Adı':       r.role === 'teacher' ? (r.institution || '') : '',
     'Yarışma':         COMP_LABELS[r.competition] || r.competition,
     'Kayıt Tarihi':    new Date(r.timestamp).toLocaleDateString('tr-TR')
   }));
@@ -442,7 +449,7 @@ function exportExcel() {
   const ws = XLSX.utils.json_to_sheet(rows);
   // Column widths
   ws['!cols'] = [
-    {wch:5},{wch:15},{wch:15},{wch:28},{wch:16},{wch:12},{wch:22},{wch:20},{wch:15}
+    {wch:5},{wch:15},{wch:15},{wch:28},{wch:16},{wch:14},{wch:12},{wch:12},{wch:24},{wch:22},{wch:22},{wch:15}
   ];
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'Katılımcılar');
@@ -457,6 +464,13 @@ function esc(str) {
   return String(str)
     .replace(/&/g,'&amp;').replace(/</g,'&lt;')
     .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* Format a student "class" value (e.g. "11" or "hazirlik") into a readable label */
+function classLabel(val) {
+  if (!val) return '-';
+  if (val === 'hazirlik') return 'Hazırlık';
+  return `${val}. Sınıf`;
 }
 
 function flashMsg(id) {

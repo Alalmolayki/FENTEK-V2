@@ -840,6 +840,7 @@ section { padding: 6rem 2rem; }
   background: radial-gradient(ellipse at top, rgba(0,245,255,0.05), transparent 60%);
   opacity: 0;
   transition: opacity var(--tr);
+  pointer-events: none; /* purely decorative — must not swallow clicks meant for cc-body/cc-actions buttons */
 }
 .comp-card:hover {
   transform: translateY(-6px);

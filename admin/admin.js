@@ -1,46 +1,42 @@
 'use strict';
 
 /* ══════════════════════════════════
-   AUTH
+   AUTH — Firebase Authentication (Email/Şifre)
+   Eski sabit kullanıcı adı/şifre kontrolü kaldırıldı; artık gerçek bir
+   kimlik doğrulama sistemi kullanılıyor. Giriş başarılı olduğunda
+   app.js'teki onAuthChange dinleyicisi paneli otomatik açar — bu yüzden
+   burada ekstra "showPanel()" çağrısına gerek yok.
 ══════════════════════════════════ */
-const ADMIN_USER = 'adminala';
-const ADMIN_PASS = 'adminala';
-
-function doLogin(e) {
+async function doLogin(e) {
   e.preventDefault();
-  const user = document.getElementById('loginUser').value.trim();
-  const pass = document.getElementById('loginPass').value;
-  const err  = document.getElementById('loginErr');
+  const email = document.getElementById('loginUser').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+  const err   = document.getElementById('loginErr');
+  const btn   = e.target.querySelector('button[type="submit"]');
 
-  if (user === ADMIN_USER && pass === ADMIN_PASS) {
-    sessionStorage.setItem('fentech_admin_auth', '1');
-    showPanel();
-  } else {
+  err.style.display = 'none';
+  if (btn) btn.disabled = true;
+
+  try {
+    if (!window.FentechDB || !window.FentechDB.auth) throw new Error('Kimlik doğrulama sistemi yüklenemedi.');
+    await window.FentechDB.signIn(email, pass);
+    // Başarılı giriş → app.js'teki onAuthChange / checkAdminHash paneli açar
+  } catch (loginErr) {
+    console.error('Giriş başarısız:', loginErr);
+    err.textContent = 'E-posta veya şifre hatalı.';
     err.style.display = 'block';
     document.getElementById('loginPass').value = '';
+  } finally {
+    if (btn) btn.disabled = false;
   }
 }
 
 function doLogout() {
-  sessionStorage.removeItem('fentech_admin_auth');
-  document.getElementById('adminPanel').style.display  = 'none';
-  document.getElementById('loginScreen').style.display = '';
-  // Trigger hashchange which calls checkAdminHash() → hides the overlay
-  window.location.hash = '';
+  if (!window.FentechDB || !window.FentechDB.auth) return;
+  window.FentechDB.signOut()
+    .then(() => { window.location.hash = ''; })   // hashchange → checkAdminHash() overlay'i kapatır
+    .catch(err => console.error('Çıkış yapılamadı:', err));
 }
-
-function showPanel() {
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('adminPanel').style.display  = 'flex';
-  initPanel();
-}
-
-// Auth check is handled by app.js checkAdminHash() when embedded in index.html.
-// This fallback handles the standalone admin/index.html redirect case.
-window.addEventListener('DOMContentLoaded', () => {
-  // Only auto-login if we're on the hash (not via app.js which runs first)
-  // app.js checkAdminHash() calls initPanel() when needed; this is a no-op when embedded.
-});
 
 /* ══════════════════════════════════
    DEFAULT DATA (mirrors app.js defaults)

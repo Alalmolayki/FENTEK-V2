@@ -877,14 +877,14 @@
       <div class="login-sub">Admin Paneli</div>
       <form id="loginForm" onsubmit="doLogin(event)">
         <div class="lfg">
-          <label>Kullanıcı Adı</label>
-          <input type="text" id="loginUser" placeholder="Kullanıcı adı" autocomplete="off">
+          <label>E-posta</label>
+          <input type="email" id="loginUser" placeholder="admin@fentek.com" autocomplete="username">
         </div>
         <div class="lfg">
           <label>Şifre</label>
-          <input type="password" id="loginPass" placeholder="••••••••">
+          <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password">
         </div>
-        <p id="loginErr" class="login-err" style="display:none">Kullanıcı adı veya şifre hatalı.</p>
+        <p id="loginErr" class="login-err" style="display:none">E-posta veya şifre hatalı.</p>
         <button type="submit" class="login-btn">Giriş Yap</button>
       </form>
       <button class="login-back-btn" onclick="window.location.hash=''">← Siteye Dön</button>
@@ -984,9 +984,10 @@
   </div>
 </div>
 
-<!-- Firebase (Firestore) - cross-device veri senkronizasyonu için -->
+<!-- Firebase (Firestore + Authentication) - cross-device veri senkronizasyonu ve admin girişi için -->
 <script src="https://www.gstatic.com/firebasejs/12.14.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.14.0/firebase-auth-compat.js"></script>
 <script src="firebase-data.js"></script>
 <script src="app.js"></script>
 <!-- SheetJS for admin Excel export -->

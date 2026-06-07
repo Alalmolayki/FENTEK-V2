@@ -24,6 +24,19 @@
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
+  const auth = firebase.auth();
+
+  /* ── Authentication (admin girişi artık Firebase Authentication üzerinden) ── */
+  const authChangeListeners = [];
+  let authReadyResolve;
+  let authReadyFired = false;
+  const authReady = new Promise(function (res) { authReadyResolve = res; });
+  auth.onAuthStateChanged(function (user) {
+    if (!authReadyFired) { authReadyFired = true; authReadyResolve(); }
+    authChangeListeners.forEach(function (cb) {
+      try { cb(user); } catch (e) { console.error('FentechDB auth listener error:', e); }
+    });
+  });
 
   const cache = {
     registrations: [],
@@ -101,6 +114,27 @@
 
     onUpdate: function (cb) {
       if (typeof cb === 'function') listeners.push(cb);
+    },
+
+    /* ── Auth (Firebase Authentication — Email/Şifre) ──
+     * auth        : ham firebase.auth() örneği (currentUser, vb. için)
+     * authReady   : ilk oturum durumu belirlenince çözülen Promise
+     *               (sayfa yenilendiğinde "zaten giriş yapılmış mı?" sorusuna
+     *               yanlış cevap vermemek için bunu beklemek gerekir)
+     * onAuthChange: oturum açma/kapama her değiştiğinde çağrılan callback ekler
+     * signIn      : e-posta + şifre ile giriş yapar (admin paneli kullanır)
+     * signOut     : oturumu kapatır
+     */
+    auth: auth,
+    authReady: authReady,
+    onAuthChange: function (cb) {
+      if (typeof cb === 'function') authChangeListeners.push(cb);
+    },
+    signIn: function (email, password) {
+      return auth.signInWithEmailAndPassword(email, password);
+    },
+    signOut: function () {
+      return auth.signOut();
     },
 
     saveCompSettings: function (obj) {

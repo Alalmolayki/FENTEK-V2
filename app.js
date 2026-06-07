@@ -866,18 +866,30 @@ function checkAdminHash() {
   if (window.location.hash === '#admin') {
     adminWrap.style.display = 'block';
     document.body.style.overflow = 'hidden';
-    // If already authenticated, show the panel
-    if (sessionStorage.getItem('fentech_admin_auth') === '1') {
-      const login = document.getElementById('loginScreen');
-      const panel = document.getElementById('adminPanel');
+    const login = document.getElementById('loginScreen');
+    const panel = document.getElementById('adminPanel');
+
+    const showLoggedIn = () => {
       if (login) login.style.display = 'none';
       if (panel) panel.style.display = 'flex';
       if (typeof initPanel === 'function') initPanel();
-    } else {
-      const login = document.getElementById('loginScreen');
-      const panel = document.getElementById('adminPanel');
+    };
+    const showLoginScreen = () => {
       if (login) login.style.display = '';
       if (panel) panel.style.display = 'none';
+    };
+
+    if (window.FentechDB && window.FentechDB.auth) {
+      // Firebase Authentication ilk oturum durumunu belirleyene kadar bekle —
+      // aksi halde sayfa yenilemesinde "giriş yapılmamış" sanıp giriş ekranı
+      // bir an için yanlışlıkla gösterilebilir.
+      window.FentechDB.authReady.then(() => {
+        if (window.location.hash !== '#admin') return; // kullanıcı bu sırada başka yere gitmiş olabilir
+        if (window.FentechDB.auth.currentUser) showLoggedIn();
+        else showLoginScreen();
+      });
+    } else {
+      showLoginScreen();
     }
   } else {
     adminWrap.style.display = 'none';
@@ -886,6 +898,11 @@ function checkAdminHash() {
 }
 
 window.addEventListener('hashchange', checkAdminHash);
+
+// Giriş/çıkış her değiştiğinde admin görünümünü yeniden değerlendir
+if (window.FentechDB && window.FentechDB.auth) {
+  window.FentechDB.onAuthChange(() => checkAdminHash());
+}
 
 /* ── Live update from Firestore (admin panel changes sync to all devices) ── */
 function refreshFromDB() {

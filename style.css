@@ -331,8 +331,8 @@ input, textarea, select, button { font-family: var(--font-b); }
 }
 .hero-dogm-logo {
   display: block;
-  width: 190px;
-  max-width: 60vw;
+  width: 240px;
+  max-width: 68vw;
   height: auto;
   margin: 0 auto 1.6rem;
   filter: brightness(0) invert(1);
@@ -1371,6 +1371,10 @@ section { padding: 6rem 2rem; }
     z-index: 490;
   }
   .nav-links.open { transform: translateX(0); }
+  [data-theme="light"] .nav-links {
+    background: rgba(240, 244, 255, 0.97);
+    border-left: 1px solid var(--border);
+  }
   .nav-lnk { font-size: 1.1rem; }
   .hamburger { display: flex; }
   .footer-links { grid-template-columns: repeat(2, 1fr); }
@@ -1405,7 +1409,7 @@ section { padding: 6rem 2rem; }
 .istanbul-svg { width: 100%; height: 100%; display: block; }
 .istanbul-img {
   object-fit: cover;
-  object-position: center bottom;
+  object-position: center top;
 }
 /* Açık temada arka plan aydınlık olduğu için siluet ters çevrilip koyu renkte gösterilir */
 [data-theme="light"] .istanbul-img { filter: invert(1); opacity: 0.8; }
@@ -1740,7 +1744,8 @@ section { padding: 6rem 2rem; }
 [data-theme="light"] .comp-card { background: var(--card); border-color: rgba(80,120,200,0.2); }
 [data-theme="light"] .comp-card:hover { border-color: var(--c1); }
 [data-theme="light"] .cc-title { color: #0a0a2e; }
-[data-theme="light"] .cc-btn-pdf { background: rgba(0,100,200,0.06); border-color: rgba(0,100,200,0.25); }
+[data-theme="light"] .cc-btn-pdf { background: rgba(0,100,200,0.06); border-color: rgba(0,100,200,0.25); color: #0a6dc8; }
+[data-theme="light"] .cc-btn-pdf:hover { background: #0a6dc8; color: #fff; }
 [data-theme="light"] .modal-box { background: #f0f4ff; }
 [data-theme="light"] .modal-body p, [data-theme="light"] .modal-body ul { color: rgba(10,10,50,0.7); }
 

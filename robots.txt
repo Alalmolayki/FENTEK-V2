@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+# Alan adınız netleşince aşağıdaki satırın başındaki "#" işaretini kaldırıp
+# kendi adresinizi yazabilirsiniz (sitemap.xml isteğe bağlıdır):
+# Sitemap: https://dogmfentekaihl.com/sitemap.xml
